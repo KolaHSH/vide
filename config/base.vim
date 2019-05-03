@@ -15,7 +15,7 @@ language messages zh_CN.utf-8
 " 是否允许使用鼠标
 "set mouse=a
 set cursorline
-set cursorcolumn
+" set cursorcolumn
 set encoding=utf8
 set helplang=cn
 set number
@@ -41,3 +41,7 @@ set noshowmode
 set cmdheight=1
 "set autochdir   " 将文件所在路径设置为vim的当前路径
 let autosave=10
+
+"set conceallevel=0  " json正常显示文本
+"这样quickfix里面的跳转会先复用已有文件的窗口，再复用已有标签，最后没有的话新建标签
+set switchbuf=useopen,usetab,newtab

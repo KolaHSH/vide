@@ -15,6 +15,12 @@ vnoremap q <esc>:close<cr>
 nnoremap <BackSpace> :nohl<cr>
 map <F4> <esc>:wal<cr>
 " noremap u uzz
+" 窗口
+noremap <C-left> <C-w><C-h>
+noremap <C-down> <C-w><C-j>
+noremap <C-up> <C-w><C-k>
+noremap <C-right> <C-w><C-l>
+" noremap <F10> <esc>:lopen<cr>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -54,10 +60,13 @@ nnoremap <M-r> :LeaderfMru<CR>
 " 用什么作为开头
 "map <M> <Plug>(easymotion-prefix)
 
-map <M-l> <Plug>(easymotion-lineforward)
+" 使用f+char
+" map <M-l> <Plug>(easymotion-lineforward)
 " map <M-j> <Plug>(easymotion-j)
 " map <M-k> <Plug>(easymotion-k)
-map <M-h> <Plug>(easymotion-linebackward)
+" 使用F+char
+" map <M-h> <Plug>(easymotion-linebackward)
+" move to char
 map <M-k> <Plug>(easymotion-bd-f)
 nmap <M-k> <Plug>(easymotion-overwin-f)
 " Move to line
@@ -67,7 +76,7 @@ nmap <M-j> <Plug>(easymotion-overwin-line)
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 " goyo key map
-nnoremap <F10> <esc>:Goyo<cr>
+nnoremap <F7> <esc>:Goyo<cr>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -94,3 +103,27 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
 " autoformat key map
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 nnoremap <c-I> :Autoformat<cr>
+
+
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" defx
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+function Open_cur_file_dir()
+    let g:cur_dir = expand("%:p:h")
+    exec 'Defx '.g:cur_dir
+endfunction
+
+nnoremap <F2> <esc>:Defx<cr>
+nnoremap <M-o> <esc>:call Open_cur_file_dir()<cr>
+" nnoremap <F2> <esc>:call Open_cur_file_dir()<cr>
+"
+"
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" MatchTagAlways
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" asyncrun
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+noremap <F9> :call asyncrun#quickfix_toggle(12)<cr>

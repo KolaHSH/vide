@@ -29,12 +29,12 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_collect_identifiers_from_tags_files=1
 " 从第2个键入字符就开始罗列匹配项
 let g:ycm_min_num_of_chars_for_completion=1
-" 禁止缓存匹配项,每次都重新生成匹配项
-let g:ycm_cache_omnifunc=0
+" 允许缓存匹配项
+let g:ycm_cache_omnifunc=1
 " 语法关键字补全
 let g:ycm_seed_identifiers_with_syntax=1
 "补全后自动关闭预览窗口, 以后支持悬浮窗口就好了
-let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_autoclose_preview_window_after_completion = 1
 "离开插入模式后自动关闭预览窗口
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 "语法关键字补全
@@ -44,7 +44,37 @@ let g:ycm_use_ultisnips_completer = 1
 "在实现和声明之间跳转,并分屏打开, 以后支持悬浮窗口就好了
 " let g:ycm_goto_buffer_command = 'horizontal-split'
 let g:ycm_goto_buffer_command = 'vertical-split'
-
-
+" 自动补全python的import等，不用ctrl space了
+let g:ycm_semantic_triggers = {'python': ['re!from\s+\S+\s+import\s']}
+" 可以同时安装clang和clangd，默认启动clangd除非设置下面
+let g:ycm_use_clangd = 0
+let g:ycm_filetype_whitelist = {
+            \ "c":1,
+            \ 'h': 1,
+            \ 'hpp': 1,
+            \ "cpp":1,
+            \ "python":1,
+            \ "javascript":1,
+            \ "java":1,
+            \ "ts":1,
+            \ "go":1,
+            \ }
+" let g:ycm_filetype_blacklist = {
+"         \ 'tagbar': 1,
+"         \ 'notes': 1,
+"         \ 'markdown': 1,
+"         \ 'netrw': 1,
+"         \ 'unite': 1,
+"         \ 'text': 1,
+"         \ 'vimwiki': 1,
+"         \ 'pandoc': 1,
+"         \ 'infolog': 1,
+"         \ 'mail': 1
+"         \ 'html': 1,
+"         \ 'css': 1,
+"         \ 'xml': 1,
+"         \ 'json': 1,
+"       \ }
+"
 " endif
 " youcomplete config end

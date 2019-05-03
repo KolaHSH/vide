@@ -1,5 +1,5 @@
 " tagbar config begin
-if !empty(glob(plug_home."/tagbar"))
+" if !empty(glob(plug_home."/tagbar"))
 
     let g:tagbar_width = 35
     function! Tagbar_Toggle()
@@ -11,5 +11,5 @@ if !empty(glob(plug_home."/tagbar"))
     endfunction
     nnoremap <F3> :call Tagbar_Toggle()<CR>
 
-endif
+" endif
 " tagbar config begin

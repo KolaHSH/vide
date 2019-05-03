@@ -1,5 +1,5 @@
 "-------------------------------------------"
-"                                          	"
+"                                           "
 "          theme config                     "
 "                                           "
 "-------------------------------------------"
@@ -14,9 +14,9 @@ function! s:patch_lucius_colors()
     hi Comment guifg=#5C6370 ctermfg=59
 endfunction
 
-autocmd! ColorScheme space-vim-dark call s:patch_lucius_colors()
+autocmd! ColorScheme gruvbox call s:patch_lucius_colors()
 
-colorscheme space-vim-dark
+colorscheme gruvbox
 
 " leaderf
 "highlight Lf_hl_match gui=bold guifg=Red cterm=bold ctermfg=21

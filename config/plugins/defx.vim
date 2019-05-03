@@ -1,6 +1,13 @@
 " defx config begin
 " if !empty(glob(plug_home."/defx.nvim"))
-    nnoremap <F2> <esc>:Defx<cr>
+
+    " function! Root(path) abort
+    "   return fnamemodify(a:path, ':t')
+    " endfunction
+
+    " call defx#custom#source('file', {
+    "      \ 'root': 'Root',
+    "      \})
 
     call defx#custom#option('_', {
                 \ 'winwidth': 30,
@@ -9,7 +16,8 @@
                 \ 'show_ignored_files': 0,
                 \ 'buffer_name': '',
                 \ 'toggle': 1,
-                \ 'resume': 1
+                \ 'resume': 1,
+                \ 'columns': "git:mark:indent:icon:icons:filename:type"
                 \ })
 
     call defx#custom#column('filename', {
@@ -21,6 +29,11 @@
                 \ })
 
     call defx#custom#column('mark', {
+                \ 'readonly_icon': '✗',
+                \ 'selected_icon': '✓',
+                \ })
+
+    call defx#custom#column('icon', {
                 \ 'readonly_icon': '✗',
                 \ 'selected_icon': '✓',
                 \ })
@@ -68,7 +81,7 @@
         nnoremap <silent><buffer><expr> N
                     \ defx#do_action('new_file')
         nnoremap <silent><buffer><expr> dd
-                    \ defx#do_action('remove')
+                    \ defx#do_action('remove_trash')
         nnoremap <silent><buffer><expr> r
                     \ defx#do_action('rename')
         nnoremap <silent><buffer><expr> .
@@ -87,6 +100,8 @@
                     \ defx#do_action('print')
         nnoremap <silent><buffer><expr> cd
                     \ defx#do_action('change_vim_cwd')
+        " nnoremap <silent><buffer><expr> cd
+        "             \ defx#do_action('open_directory')
     endf
 
     " in this function we should vim-choosewin if possible

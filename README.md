@@ -1,4 +1,4 @@
-# happy neovim
+# vide
 
 ---
 
@@ -17,6 +17,29 @@
 ~~我现在需要对汇编，c，c++，python，nodejs的支持，对于nodejs的需求没有那么强烈。能够有文件管理器，函数导航栏。~~
 
 要想使用系统剪切板，那么安装一个xclip或者xsel然后在neovim中使用"+yy就可以与系统互通了。
+
+## 安装
+
+python-neovim，xsel（或者xclip）剪切板，python-send2trash，ctags
+
+补全：clang,cmake,go,nodejs,npm,jdk
+
+代码检查：nasm,gcc,cppcheck,clang,pylint,flake8,nvcc,javac,eslint,prettier
+
+格式化：astyle autopep8；
+
+安装nerd字体，来[这里](https://github.com/ryanoasis/nerd-fonts/releases/tag/v2.0.0)下载
+
+安装带补丁的字体，执行下面的命令
+
+```shell
+git clone https://github.com/powerline/fonts.git
+cd fonts
+./install.sh
+然后执行fc-cache -fv
+```
+
+
 
 ## 安装插件管理器
 
@@ -82,7 +105,28 @@ python3 ./install.py --clang-completer --go-completer --ts-completer --java-comp
 
    哈哈，可以了，重新编译了一下ycm，使用--clang-completer就可以支持.ycm_extra_conf.py了，而--clangd-completer不支持。好吧，cmake有点难，暂时先不搞，现在先用.ycm_extra_conf.py吧，不过推荐使用cmake，因为这样ale也可以使用了。哈哈，nice！！
 
+   .ycm_extra_conf.py默认没有添加系统的头文件路径，可以自己加上，用-I，可以自动补全，用-isystem可以跳转头文件，所以都加上。
+
+   ```python
+       '-isystem', '/usr/include',
+       '-isystem', '/usr/include/c++/8.3.0',
+       '-I', '/usr/include',
+       '-I', '/usr/include/c++/8.3.0',
+   ```
+
+   
+
 2. python
+
+   python 改成这个组合了
+
+   ```viml
+   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python']}
+   Plug 'Shougo/neopairs.vim', {'for': 'python'}
+   Plug 'deoplete-plugins/deoplete-jedi', { 'for':'python' }
+   ```
+
+   这个比ycm好用，另外对于ale使用pylint和flake8，最好进入虚拟环境之后重新安装，这样ale就可以对代码进行检测了。
 
    首先应该先学会python的虚拟环境的使用，这样便于代码的移植，以前使用virtualenv，现在改用pipenv，一个更强大的虚拟环境工具，使用方法如下：
 
@@ -134,7 +178,7 @@ python3 ./install.py --clang-completer --go-completer --ts-completer --java-comp
    3. 初始化虚拟环境，执行`pipenv --python python版本`
    4. 使用pipenv install 安装所需要的包
    5. 执行pipenv lock写入依赖
-   6. 执行pipenv shell进入虚拟环境，要想在虚拟环境中使用nvim，需要pipenv install neovim，哈哈哈
+   6. 执行pipenv shell进入虚拟环境，要想在虚拟环境中使用nvim，需要pipenv install neovim，同时为了能够使用ale检查，需要pipenv install pylint flake8哈哈哈
    7. 开心的coding吧
    ```
 
@@ -235,9 +279,11 @@ python3 ./install.py --clang-completer --go-completer --ts-completer --java-comp
    3. 接着安装需要的模块就好了，需要npm install module --save这样可以保存依赖到package.json的depencies中，自动更新package.json
    4.  接着eslint --init用于ale的差错检测
    5. 配置一下jsconfig.json文件
+   6. npm嫌慢的话可以配置一下`npm config set registry https://registry.npm.taobao.org`
    现在就可以使用了
    ```
-
+```
+   
    Nice!!
 
 ###### coc
@@ -254,7 +300,7 @@ python3 ./install.py --clang-completer --go-completer --ts-completer --java-comp
 
 之后需要进行配置，这个linter好像不同的语言需要不同的配置，~~一些linter好像在ale中内置了，不需要单独安装~~，应该是需要单独安装的。具体配置如下：
 
-```shell
+​```shell
     let g:ale_linter_aliases = {'vue': ['css', 'javascript', 'typescript']}
     let g:ale_linters = {
                 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -379,7 +425,9 @@ DoxLic来输入许可证信息，一般在文件开头。
 
 ##### 代码格式化
 
-格式化代码使用的是[Chiel92/vim-*autoformat*](https://github.com/Chiel92/vim-autoformat)这个工具，直接安装，然后不同的语言需要不同的后端，astyle支持c，c++，java，c#，autopep8支持python，同时ale也可以改用autopep8了，js使用eslint，然后html，css，sql啥的暂时先不管了。
+格式化代码使用的是[Chiel92/vim-*autoformat*](https://github.com/Chiel92/vim-autoformat)这个工具，直接安装，然后不同的语言需要不同的后端，astyle支持c，c++，java，c#，autopep8支持python，同时ale也可以改用autopep8了，js使用eslint，然后json, html，css，sql啥的暂时先不管了。
+
+js,json使用js-beautify
 
 这里主要是说的是，autoformat安装完成后就会自动去检查相应的格式化工具，调用默认的格式化方法，而我们想定制的话就要按照下面的这种方法来，贴一段作者的介绍：
 
@@ -843,7 +891,14 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊', '▏']
 
 #### 图标
 
-[ryanoasis/vim-*devicons*](https://github.com/ryanoasis/vim-devicons)这个插件可以显示图标，但是必须安装这个字体[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts)
+[ryanoasis/vim-*devicons*](https://github.com/ryanoasis/vim-devicons)这个插件可以显示图标，但是必须安装这个字体[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts)或者来[这里](https://github.com/ryanoasis/nerd-fonts/releases)找一下合适的release。
+
+```shell
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+```
+
+
 
 #### 平滑滑动
 
