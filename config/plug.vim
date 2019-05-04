@@ -13,15 +13,21 @@ call plug#begin('~/.cache/plugins')
 Plug 'Valloric/YouCompleteMe',
     \ {
     \ 'do': './install --clang-completer --go-completer --ts-completer --java-completer',
+    \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'javascript.jsx', 'ts', 'java', 'go' ]
     \ }
     " 直接设置白名单
-    " \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'ts', 'java', 'go' ]
 
-Plug 'Shougo/deoplete.nvim',
-    \ {
-    \ 'do': ':UpdateRemotePlugins',
-    \ }
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim',
+        \ {
+        \ 'do': ':UpdateRemotePlugins',
+        \ }
     " \ 'for': ['html', 'css', 'xml', 'sh', 'json', 'vim']
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 """""""""""web"""""""""""
 Plug 'mattn/emmet-vim', {'for': [ 'html','htm', 'xml', 'xhtml', 'css' ]}
@@ -32,7 +38,6 @@ Plug 'valloric/MatchTagAlways', {'for': ['html', 'htm', 'xml', 'xhtml', 'css', '
 
 """""""""""latex"""""""""""
 " latex 插件
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['tex']}
 Plug 'lervag/vimtex',
     \ {
     \ }
@@ -102,12 +107,22 @@ Plug 'Yggdroot/LeaderF',
     \ {
     \ 'do': './install.sh',
     \ }
+if !has('nvim')
+    Plug 'vim-utils/vim-alt-mappings'
+endif
 
 " 目录导航
-Plug 'Shougo/defx.nvim',
-    \ {
-    \ 'do': ':UpdateRemotePlugins',
-    \ }
+"
+if has('nvim')
+    Plug 'Shougo/defx.nvim',
+        \ {
+        \ 'do': ':UpdateRemotePlugins',
+        \ }
+else
+    Plug 'Shougo/defx.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'kristijanhusak/defx-git'
 " Plug 'kristijanhusak/defx-icons'
 

@@ -4,13 +4,13 @@
 let g:UltiSnipsSnippetsDir = '~/.cache/plugins/vim-snippets/'
 let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 "let g:UltiSnipsEditSplit="heroize"
-" let g:UltiSnipsExpandTrigger       = '<C-R>'
+let g:UltiSnipsExpandTrigger       = '<right>'
 " let g:UltiSnipsJumpForwardTrigger  = '<tab>'
 " let g:UltiSnipsJumpForwardTrigger  = '<c-l>'
-let g:UltiSnipsJumpForwardTrigger  = '<right>'
+let g:UltiSnipsJumpForwardTrigger  = '<down>'
 " let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-h>'
-let g:UltiSnipsJumpBackwardTrigger = '<left>'
+let g:UltiSnipsJumpBackwardTrigger = '<up>'
 
 " if &filetype == "tex"
 "     " 失败了
