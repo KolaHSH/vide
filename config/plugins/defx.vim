@@ -45,7 +45,8 @@
                     \ defx#do_action('toggle_select') . 'j'  " '选中并移动到下一行
         nnoremap <silent><buffer><expr> *
                     \ defx#do_action('toggle_select_all')
-        nnoremap <silent><buffer><expr> X              " 使用系统默认软件打开
+        " 使用系统默认软件打开ddk
+        nnoremap <silent><buffer><expr> X
                     \ defx#do_action('execute_system')
         nnoremap <silent><buffer><expr> yy
                     \ defx#do_action('copy')

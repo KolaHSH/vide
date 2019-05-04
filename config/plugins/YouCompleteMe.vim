@@ -11,6 +11,7 @@
 
 "let g:ycm_error_symbol = '>>' "✖✘ㄨ✕✕
 "let g:ycm_warning_symbol = '--' "◯➤
+" let g:ycm_log_level = 'debug'
 "打开加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf=1
 " 屏蔽语法检查， 使用ale
@@ -55,6 +56,7 @@ let g:ycm_filetype_whitelist = {
             \ "cpp":1,
             \ "python":1,
             \ "javascript":1,
+            \ "javascript.jsx":1,
             \ "java":1,
             \ "ts":1,
             \ "go":1,

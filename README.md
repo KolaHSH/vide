@@ -4,29 +4,79 @@
 
 [TOC]
 
-以前用vim，但是总感觉vim比neovim差点东西，而且以前的我喜欢大而全，将vim配置的特别豪华，各种语言都要支持，因此显得臃肿肥大速度也变慢了，有时候甚至配置出现了冲突。这次借着重装系统的机会尝试下neovim，我是被neovim的悬浮窗口吸引来的，然后重新配置一下，深刻理解下这些插件，不要让自己糊糊涂涂的了，
+主要是记录下我的配置，方便查阅，同时也分享下我对这些插件的配置，你可以从中挑选一部分觉得适合自己的插件配置放到自己的配置中，我以后在开发过程中也会不断的尝试一些插件，欢迎star。
 
-我将配置改成了模块化的方式，init.vim用于加载各种配置文件，所有的配置都在config下面，config/plugins是各种插件的配置，一个插件一个文件，这样管理起来方便，看起来舒心，配置起来随心所欲。
+以前用vim，但是总感觉vim比neovim差点东西，而且以前的我喜欢大而全，将vim配置的特别豪华，各种语言都要支持，因此显得臃肿肥大速度也变慢了。另外，我在配置的时候也不管插件有没有冲突，一股脑往.vimrc中添加插件和配置，到最后.vimrc又臭又长，各种插件冲突快捷键冲突，导致最后的vim很难用了，借着这次重装系统的机会，我想尝试一下neovim，就不安装vim了，直接上neovim了。
 
-![截图](./pic/happy.png)
+这次我学聪明了，我将各个插件的配置从以前的一个配置文件中分离出来，每个插件都有自己的一个配置文件，这样既方便修改，也方便分享，别人觉得你的配置好直接把这个文件给他就好了，一目了然。
 
-首先使用linux的包管理器安装neovim，与此同时，neovim中的很多插件需要python支持，因此需要通过pip 安装neovim，neovim的默认配置文件在~/.config/nvim/init.vim中。
+## 配置结构
 
-之前配置的vim很复杂，基本上什么都有，什么乱七八糟的语言都支持，用了这么久之后发现，多了不一定好，我自己真正用到的其实也就那么几个，所以这个改用neovim想重新配置一下，主要是进行简配，觉得自己用的着的就配置上，之后用得着的之后再配。
+首先这次的配置结构如下，当前的配置结构仅仅是我最初的设想，由于水平有限，我还没有实现我一个更好的设想，这个后期或许会考虑，先贴一下这次的总体结构，后面说一下我更好的设想。
 
-~~我现在需要对汇编，c，c++，python，nodejs的支持，对于nodejs的需求没有那么强烈。能够有文件管理器，函数导航栏。~~
+```shell
+# neovim的基础配置文件是~/.config/nvim/init.vim
+.
+├── autoload
+│   └── plug.vim        # vim-plug插件
+├── colors					# 用于存放主题的文件夹
+├── config
+│   ├── base.vim       # 基础配置
+│   ├── keymap.vim  # 快捷键映射
+│   ├── plugins           # 各种插件的配置文件夹
+│   ├── plug.vim		# vim-plug的配置文件，用于描述需要哪些插件
+│   └── theme.vim    # 主题配置
+├── init.vim				# 初始配置
+```
 
-要想使用系统剪切板，那么安装一个xclip或者xsel然后在neovim中使用"+yy就可以与系统互通了。
+其中init.vim仅仅用于加载各种配置，主要的配置都在config文件夹下，其中该文件夹下面的base.vim用于基础配置，keymap用于配置各种快捷键映射，将这些快捷键集合在一起进行配置方便进行检索，theme.vim主要用于颜色主题的配置，plug.vim则是vim-plug这个插件的配置，主要描述需要哪些插件，plugins下面则是对应的各个插件的配置，每个插件的配置一个文件，该文件与插件同名。
+
+以上便是最初设想的基本结构。
+
+更高级的设想是这样子的，我能为不同语言的开发配置不同的插件，比如c语音的开发，我需要插件ycm，ale，autoformat，indentline；对于python语言的开发我需要ycm，ale，autoformat，indentline，python-repl等，我是不是可以根据语音或者工程的不同，提前打包好适合各个语音或工程的配置，启动该工程的时候仅仅启动这一撮相关的插件与配置就可以了呢？这样一些无关紧要的插件就不需要启动了，一些更适合该工程的插件可以替换原有的不合适的插件了，同时，再需要开发一种新的语言项目或者新的工程的时候可以只针对该工程进行相应的配置，而不影响其他的配置，最后，需要将一些通用插件分离出来，这些插件不管在哪个工程里都直接启动。
+
+简单说就是不同的工程有不同的插件集合包，这样的优势还有统一工程目录，比如所有的工程都只需要在该工程下新建一个.vproject文件夹（或者其他名字），便表示包含该文件夹的目录便是该工程的根目录，那么一些需要根据工程需要进行配置的文件都丢在这个文件夹下面就好了，所有的插件都应该来搜索这个文件夹，然后去里面搜索自己所需的配置。
+
+不知这样子会不会更好，依照我目前的水平，我还搞不定。
+
+## 主界面截图
+
+![1556892820481](assets/1556892820481.png)
+
+![截图](./assets/happy.png)
+
+![1556893682899](assets/1556893682899.png)
+
+## 特性介绍
+
+写代码无非就需要如下三个主要功能，代码补全跳转，代码检查，代码格式化。当然还有其他的辅助功能比如颜色，一键运行，注释等等等，这些都是辅助功能了。我们需要先把补全，检查，格式化配置好，这其中补全用到了两个插件，ycm和deoplete，他会根据文件类型自动开启关闭。对于c，c++，python，js，go，java语言自动启动ycm补全，对于其他文件则启动deoplete补全。代码检查使用了异步检查工具ale，代码格式化使用了格式化工具autoformat。其他一些插件参看[plug.vim](config/plug.vim)。
+
+该配置对于c，c++，python，js补全相当nice，代码检查也很棒，可以通过后面的gif来了解。对于java和go我还没有详细检测，因为目前还用不到，按照下面的过程，你可以了解怎么使用该配置来开发c，c++，python，js项目，后面我需要开发java或者go或者asm项目的时候我会再来补充的，后期还会补充late的使用。
 
 ## 安装
 
-python-neovim，xsel（或者xclip）剪切板，python-send2trash，ctags
+### 依赖
 
-补全：clang,cmake,go,nodejs,npm,jdk
+这个是指电脑本机需要安装的软件，后面我会想办法尽可能减少这些依赖软件，或者可以写个脚本自动安装，不过我需要告诉你安装了些什么。
 
-代码检查：nasm,gcc,cppcheck,clang,pylint,flake8,nvcc,javac,eslint,prettier
+1. cmake 用于编译ycm
+2. clang 用于ycm的c类语义补全
+3. ctags 用于tagbar
+4. node 用于js补全
+5. npm 用于js的包管理
+6. jdk 用于java补全
+7. cppcheck 用于ale的语法检查
+8. pylint 用于python的语法检查
+9. flake8 用于python的语法检查
+10. eslint 用于js，ts的语法检查
+11. astyle 用于c，cpp，java的代码格式话工具
+12. autopep8 用于python 的代码格式化工具
+13. js-beautiful 用于js（js也可以用eslint格式化代码，需要配置）, json的格式化
+14. xclip或者xsel用于neovim使用系统剪切板
+15. python-neovim 要想使用neovim，需要安装这个软件
+16. pipenv或者virtualenv用于python的虚拟环境
 
-格式化：astyle autopep8；
+### 字体？
 
 安装nerd字体，来[这里](https://github.com/ryanoasis/nerd-fonts/releases/tag/v2.0.0)下载
 
@@ -39,105 +89,222 @@ cd fonts
 然后执行fc-cache -fv
 ```
 
+~~或者来这里下载我的dotfile，里面包含了所需字体，主题等~~
 
+作为一个开发者，一般上述工具都会安装了，安装完上述工具之后把该项目克隆到~/.config/nvim下面，然后进入neovim，执行:PlugInstall等待安装完成就ok了。
 
-## 安装插件管理器
+## 插件
 
-这里使用vim-plug，对于neovim，直接运行下面的命令即可
+### 插件管理器
+
+插件管理器使用vim-plug，对于新的neovim，可以直接运行下面的命令安装
 
 ```shell
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
-这样，vim-plug就会安装在~/.config/nvim/autoload下面了，启动neovim的时候就能够自动启动vim-plug了。
+这样，vim-plug就会安装在~/.config/nvim/autoload下面了，启动neovim的时候就能够自动启动vim-plug了，或者直接从我的dotfile中下载。
 
-## 安装插件
+安装完成后需要定义自己的插件需要安装在哪里，打开文件config/plug.vim，其内容如下所示：
 
-首先确定自己的插件要安装在哪里，然后在~/.config/nvim/init.vim中进行配置，我安装在～/.cache/nvim_plugins下面，这个目录是自定义的，然后在~/.config/nvim/init.vim中进行配置，如下：
+```viml
+call plug#begin('~/.cache/plugins')
 
-```shell
-call plug#begin('~/.cache/nvim_plugins')
-" 插件都写在begin和end之间
+" 插件列表
+Plug 'Valloric/YouCompleteMe',
+    \ {
+    \ 'do': './install --clang-completer --clangd-completer --go-completer --ts-completer --java-completer',
+    \ }
+    
+Plug '.....'
+.....
+
 call plug#end()
+
 ```
 
-### 代码相关
+在call plug#begin()的括号中填写路径，表示插件将要安装到哪里，之后是插件列表，Plug '.../...'，后面可以带参数比如：
 
-#### 通用
+```viml
+Plug 'Valloric/YouCompleteMe',
+    \ {
+    \ 'do': './install --clang-completer --clangd-completer --go-completer --ts-completer --java-completer',
+    \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'ts', 'java', 'go' ],
+    \ 'on': ['']
+    \ }
+```
 
-##### 补全插件
+其中do表示在使用PlugInstall之后该插件需要执行的动作，for表示该插件在neovim编辑这些文件的时候才会载入，on表示该插件在neovim执行这些命令的时候才会载入，具体可以参考我的配置
 
-###### ycm
+### 插件列表
 
-补全插件使用[youcompleteme](https://github.com/Valloric/YouCompleteMe)，其他的补全插件还有oco.nvim、deplote.vim等。
+可以直接打开[config/plug.vim](./config/plug.vim)来查看，这里面只描述了插件，没有其他配置，因此很清晰。
 
-在init.vim中添加Plug 'Valloric/YouCompleteMe'，然后执行PlugInstall等待youcompleteme安装完成。
+### 补全
 
-安装完成之后，进入youcompleteme的下载目录（~/.cache/nvim_plugins/youcompleteme）执行下面的命令：
+补全主要使用ycm与deoplete（补全框架），如果只想使用ycm也可以，我觉得deoplete速度比较快（使用过程中没感觉差多少），但是ycm比较强大，我使用ycm用于c，c++，python，javascripy，java，go的补全，其他文件使用deoplete，因此需要为这两个插件设置黑白名单，对ycm设置白名单，该配置在config/plugins/YouCompleteMe.vim中：
+
+```viml
+let g:ycm_filetype_whitelist = {
+            \ "c":1,
+            \ 'h': 1,
+            \ 'hpp': 1,
+            \ "cpp":1,
+            \ "python":1,
+            \ "javascript.jsx":1,
+            \ "java":1,
+            \ "ts":1,
+            \ "go":1,
+            \ }
+```
+
+以后只有该类文件才开启ycm，其他文件不开启。
+
+对于deoplete则需要进行相应的配置，遇到上述文件的时候不启动deoplete，该配置在config/plugins/deoplete.vim中：
+
+```viml
+autocmd FileType c,h,cpp,hpp,python,js,java,go,ts
+       \ call deoplete#custom#buffer_option('auto_complete', v:false)
+```
+
+在打开上述文件的时候关闭deoplete开启ycm。
+
+> 这便是当前结构的弊端
+>
+> 如果是我设想的那种更高级的结构，我们只需要为不同的文件配置不同插件包集合就好了，无需担心各个插件之间相互影响。
+
+对于如何知道文件类型，你可以这样做，打开你的文件，然后`:echo &filetype`便可查看文件类型了。
+
+### 代码检查
+
+代码检查使用的是ale，我们来看下ale需要用到的工具，这个需要在自己的电脑上安装这些工具，我们通过配置来查看一下所需的工具，[配置文件](config/plugins/ale.vim):
 
 ```shell
-python3 ./install.py --clang-completer --go-completer --ts-completer --java-completer
+let g:ale_linters = {
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'asm': ['gcc'],
+            \   'nasm': ['nasm'],
+            \   'c': ['cppcheck', 'clang'],
+            \   'cpp': ['cppcheck', 'clang'],
+            \   'cmake': ['cmake-format'],
+            \   'python': ['pylint', 'flake8'],
+            \   'cuda': ['nvcc'],
+            \   'go': ['gofmt'],
+            \   'java': ['javac'],
+            \   'javascript': ['eslint'],
+            \   'shell': ['shell -n flag'],
+            \   'lua': ['luac'],
+            \   'yaml': ['prettier'],
+            \   'latex': ['alex'],
+            \   'vue': ['eslint'],
+            \ }
 ```
 
-以上命令添加了对c族语言的语义补全支持，添加了js语义补全支持，添加了go语义补全支持，添加了java语义补全支持，另外其还支持c#，但我用不到就先不添加了。
+直接安装你所需要的就可以了，不需要的可以不安装，比如不开发lua，可以不安装luac，安装完成就ok了。
 
-要想支持以上语言，必须安装clang，go，node，npm，jdk（要求jdk8，但是我安装的是最新版）
+[支持列表](https://github.com/w0rp/ale/blob/master/supported-tools.md)这里可以看到ale所支持的语言。
 
-等编译完成即可。
+### 代码格式化
 
-对于ycm、ale与autoformat得好好看一下，这些需要仔细配置一下，现在先整ycm的c家族补全。
+代码格式化使用的是autoformat，我们也是通过配置文件来观察需要安装哪些工具，[配置文件](config/plugins/vim-autoformat.vim)：
 
-1. c/c++
+```shell
+" js-beautiful: js html css json xml
+" astyle: c c++ java go js 
+" autopep8: python
+```
 
-   这个么，ycm文档说的，clang需要一系列的参数，如果clang不能解析我们的代码，那么ycm也就不能提供语义补全了。
+安装完以上插件就ok了
 
-   ycm的文档提供了两种方式进行语义补全，第一种是使用编译数据库，该方式可以很好的与ale进行配合，所以我打算使用这种方式。另一种方式便是使用.ycm_extra_conf.py配置文件了。
+### 其他
 
-   使用编译数据库需要学会使用make或者cmake，由MakeFile或者CMakeLists.txt来生成compile_commands.json。
+其他插件
 
-   **还是有点迷惑，不过这个方法挺好，ale也可以用，以后得好好学习一下[cmake](<https://www.hahack.com/codes/cmake/>)，现在暂时使用.ycm...吧**
+## 开发使用
 
-   原来如此，原来编译的时候用的编译选项是--clangd-completor，而clangd不支持.ycm_extra_conf.py
+### c/c++项目
 
-   ![1555861273579](./pic/1555861273579.png)
+1. 头文件的补全与跳转<leader> g
 
-   还能指定cuda，但是有个问题，怎么判断这个文件就是cuda的呢？？
+   ![ycm头文件与跳转](assets/ycm头文件与跳转.gif)
 
-   哈哈，可以了，重新编译了一下ycm，使用--clang-completer就可以支持.ycm_extra_conf.py了，而--clangd-completer不支持。好吧，cmake有点难，暂时先不搞，现在先用.ycm_extra_conf.py吧，不过推荐使用cmake，因为这样ale也可以使用了。哈哈，nice！！
+2. 声明与定义的跳转<leader> g
 
-   .ycm_extra_conf.py默认没有添加系统的头文件路径，可以自己加上，用-I，可以自动补全，用-isystem可以跳转头文件，所以都加上。
+   ![ycm定义的跳转](assets/ycm定义的跳转.gif)
 
-   ```python
-       '-isystem', '/usr/include',
-       '-isystem', '/usr/include/c++/8.3.0',
-       '-I', '/usr/include',
-       '-I', '/usr/include/c++/8.3.0',
-   ```
+3. 语义补全
 
-   
+   会自动补全，也可以使用ctrl space强制补全
 
-2. python
+   ![ycm语义补全](assets/ycm语义补全.gif)
 
-   python 改成这个组合了
+   与qtcreator类似，不需要了解是不是指针，直接输入点"."便可以出来补全，或者使用ctrl space强制补全，选中后如果是指针ycm自动将点"."改为->。
 
-   ```viml
-   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['python']}
-   Plug 'Shougo/neopairs.vim', {'for': 'python'}
-   Plug 'deoplete-plugins/deoplete-jedi', { 'for':'python' }
-   ```
+c/c++项目的开发有两种方式
 
-   这个比ycm好用，另外对于ale使用pylint和flake8，最好进入虚拟环境之后重新安装，这样ale就可以对代码进行检测了。
+方式一
 
-   首先应该先学会python的虚拟环境的使用，这样便于代码的移植，以前使用virtualenv，现在改用pipenv，一个更强大的虚拟环境工具，使用方法如下：
+使用.ycm_extra_conf.py文件方式，要使用该方式，在编译ycm的时候必须要有--clang-completer参数，该参数既支持.ycm_extra_conf.py方式，也支持compile_commands.json凡是，而--clang-completer参数仅支持compile_commands.json方式，当然可以同时添加两者。
 
-   ```shell
-   1. 新建一个工程文件夹
-   2. 建立一个.venv文件夹，不建立也可以，不建立的话默认的包都安装到~/.loacal/virtualenv下面，其实进入虚拟环境后包安装到哪里无所谓，主要是生成了Pipfile和Pipfile.lock，方便移植的时候知道需要哪些包哪些依赖。
-   3. 使用命令pipenv --python 版本号来初始化当前文件夹
-   4. 生成的Pipfile是用于描述安装了哪些包的，Pipfile.lock用于描述需要哪些依赖
-   ```
+该方式需要以下步骤，在项目根目录下放一个文件.ycm_extra_conf.py，[我的.ycm_extra_conf.py](#)，在其中flags中添加所需的内容，例子如下：
 
-   有时候因为源的问题，在lock依赖的时候会出现问题，因此在Pipfile中更还源，有如下可用源：
+```python
+# .......other code
+
+flags = [
+    '-Wall',
+    '-Wextra',
+    '-Werror',
+    '-Wno-long-long',
+    '-Wno-variadic-macros',
+    '-fexceptions',
+    '-DNDEBUG',
+    '-DUSE_CLANG_COMPLETER',
+    '-DYCM_EXPORT=',
+    '-x',
+    'c',	# c语言便写c，c++语言编写c++
+    '-I', '.', 	# 包含当前路径
+    '-I', './include/', # 自定义头文件路径
+    '-isystem', '/usr/include', # 这是我系统的头文件路径
+    '-isystem', '/usr/include/c++/8.3.0', # 这是我系统的c++头文件路径
+    '-I', '/usr/include',
+    '-I', '/usr/include/c++/8.3.0',
+]
+
+# ......other code
+```
+
+注意-isystem后面跟的是系统的头文件路径，一般-isystem跟系统目录之后再使用-I跟同样的目录，如果你要开发opencv，qt等的项目，记得-I -isystem opencv或者qt的include文件夹路径即可。
+
+方式二
+
+使用compile_commands.json方式，该方式
+
+或者使用compile_data.json方式，该方式需要根据makefle进行生成，我还不太会makefile，所以没成功过，如果能够成功，那么后面的代码检查工具也可以使用该方式进行代码检查了，两者可以统一了。
+
+### cuda项目
+
+在这里先占个坑。
+
+### python项目
+
+1. python的语义补全
+
+   会自动补全，也可以使用ctrl space强制补全
+
+   ![python语义补全](assets/python语义补全-1556929792869.gif)
+
+2. python的跳转<leader> g![ycmpython跳转](assets/ycmpython跳转.gif)
+
+要实现以上功能，其实也不需要做什么事情，打开python文件coding就行了。
+
+我建议python工程都需要建立一个虚拟环境来开发，这样也方便移植，虚拟环境我使用的是pipenv，当然也可以使用virtualenv，开发python项目前需要做如下工作：
+
+1. 新建立一个文件夹，在该文件夹下面建立一个.venv文件夹，之后安装的所有包都在这里，如果不建立这个文件夹，那么之后安装的所有包会在`~/.local/share/virtualenv/XXX`下面
+
+2. 使用命令`pipenv --python python版本号（比如2.7 3 3.6等）`来初始化虚拟环境，该命令生成了Pipfile文件和Pipfile.lock文件，其中Pipfile文件用于描述该工程安装了哪些包，Pipfile.lock文件用于描述依赖，在使用`pipenv 
+
+   有时候因为源的问题，安装包比较慢，因此我们在初始化之后可以更改Pipfie文件中的源，有以下源可供选择：
 
    ```shell
    阿里云：http://mirrors.aliyun.com/pypi/simple/ 
@@ -147,95 +314,85 @@ python3 ./install.py --clang-completer --go-completer --ts-completer --java-comp
    直接更改[[source]]下面的url即可
    ```
 
-   ycm对在虚拟环境中进行补全，需要配置一下`.ycm_extra_conf.py`
+3. 两种开发方式：
 
-   ```python
-   def Settings(**kwargs):
-    return {
-           # python解释器路径
-           'interpreter_path': './.venv/bin/python',
-           # python包路径
-           'sys_path': [
-               './.venv/lib/python3.7/site-packages/package1',
-               '/path/to/another/third_party/package2'
-           ]
-       }
-   ```
+   1. 进入虚拟环境（建议）
 
-   这样就差不多可以使用了，这里呢有个问题，那就是ale没法检测到虚拟环境，没法进行正确性检查，**一个很简单的方法便是进入虚拟环境操作，这样.ycm_extra_conf.py都可以不需要了**
+      在项目目录下通过命令`pipenv shell`进入虚拟环境。
 
-   ```shell
-   pipenv shell
-   ```
+      该开发方式不需要配置什么东西，可以直接在虚拟环境中开发，不过需要安装几个包，neovim和pylint，在虚拟环境中执行下面的命令:
 
-   然后一切ok
+      ```shell
+      pip install neovim
+      pip install pylint
+      pip install autopep8
+      ```
 
-   总结一下流程
+      其中neovim用于neovim的python环境，pylint用于ale的代码检查，autopep8用于代码格式化
 
-   ```shell
-   1. 新建一个工程文件夹
-   2. 新建.venv文件夹
-   3. 初始化虚拟环境，执行`pipenv --python python版本`
-   4. 使用pipenv install 安装所需要的包
-   5. 执行pipenv lock写入依赖
-   6. 执行pipenv shell进入虚拟环境，要想在虚拟环境中使用nvim，需要pipenv install neovim，同时为了能够使用ale检查，需要pipenv install pylint flake8哈哈哈
-   7. 开心的coding吧
-   ```
+      之后就可以愉快的开发了
 
-3. JavaScript
+   2. 不进入虚拟环境
 
-   js或者ts使用的是tsserver，需要在工程目录下添加一个文件jsconfig.json（json工程）或者tsconfig.json（ts工程）。
+      如果不进入虚拟环境，那么我们需要配置一下python解释器的路径，python的补全使用的也是ycm，因此需要在该工程目录下添加一个文件.ycm_extra_conf.py，该文件中添加如下内容：
 
-   ```js
+      ```python
+      def Settings( **kwargs ):
+        return {
+          'interpreter_path': '/path/to/virtual/environment/python',
+          'sys_path': [
+            '/path/to/some/third_party/package',
+            '/path/to/another/third_party/package'
+          ]
+        }
+      ```
+
+      其中`/path/to/virtual/environment/python`是python解释器的路径，需要写你虚拟环境python解释器的路径，如果在项目下建立了.venv文件夹的话，python解释器一般会在该文件夹下面，可以自己找一下。如果没有新建.venv文件夹的话，解释器路径应该在`~/.local/share/virtualenv/XXX`下面。
+
+      此外，`/path/to/some/third_party/package`是指我们需要的包的路径，需要什么包就将他的路径写在这里。
+
+4. 完成上述工作就可以开工了。
+
+### JavaScript项目
+
+1. js语义补全，甚至可以自动导入包
+
+   ![js语义补全](assets/js语义补全.gif)
+
+2. js跳转<leader>g
+
+   ![跳转](assets/跳转.gif)
+
+js工程的开发需要经过如下步骤
+
+1. 在工程目录下建立一个jsconfig.json的文件，或者tsconfig.json的文件，一个是对应js项目，一个对应ts项目。
+
+2. 在该文件中加入以下内容，关于该文件的详细配置可以参考[jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig)：
+
+   ```json
    {
        "compilerOptions": {
            "checkJs": true		// 可以诊断js
        }
-   }
-   ```
-
-   参考的是vscode的配置方法，[jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig)
-
-   jsconfig.json所在目录即为工程根目录，一个大项目中可以有多个jsconfig.json，例如：
-
-   ```shell
-   website
-   ├── client
-   │   ├── client.js
-   │   └── jsconfig.json
-   └── server
-       ├── jscofig.json
-       └── server.js
-   ```
-
-   一些参数：
-
-   ```json
-   // exclude, 排除
-   // 如果觉得速度慢了，建议写排除
-   {
        "compilerOptions": {
            "target": "es6"
        },
+   	// exclude, 排除
+   	// 如果觉得速度慢了，建议写排除，尤其node_modules
        "exclude": [
            "node_modules"
-       ]
-   }
-   // include, 包含
-   // 默认包含当前目录下的所有文件包括子文件夹的文件
-   // 写上include之后只包含include中的文件
-   {
-       "compilerOptions": {
-           "target": "es6"
-       },
-       "include": [
+       ],
+   	// include, 包含
+   	// 默认包含当前目录下的所有文件包括子文件夹的文件
+   	// 写上include之后只包含include中的文件
+   	"include": [
            "src/**/*"
        ]
    }
    // include 和 exclude的路径配置都是相对于jsconfig.json文件的
    ```
 
-   编译选项：
+   一些编译选项：
 
    | 选项                         | 描述                                                         |
    | ---------------------------- | ------------------------------------------------------------ |
@@ -247,150 +404,76 @@ python3 ./install.py --clang-completer --go-completer --ts-completer --java-comp
    | baseUrl                      | Base directory to resolve non-relative module names.         |
    | paths                        | Specify path mapping to be computed relative to baseUrl option. |
 
-   可以使用webpack别名：
+      可以使用webpack别名：
 
-   ```json
-   {
-     "compilerOptions": {
-       "baseUrl": ".",
-       "paths": {
-           // 别名：路径，使用的时候可以直接import 一些东西 from 别名/xxx
-         "ClientApp/*": ["./ClientApp/*"]
-       }
-     }
-   }
-   
-   // 然后在文件中
-   import Something from 'ClientApp/foo'
-   ```
+      ```json
+      {
+        "compilerOptions": {
+          "baseUrl": ".",
+          "paths": {
+              // 别名：路径，使用的时候可以直接import 一些东西 from 别名/xxx
+            "ClientApp/*": ["./ClientApp/*"]
+          }
+        }
+      }
+      
+      // 然后在文件中
+      import Something from 'ClientApp/foo'
+      ```
 
-   建议nodejs添加exclude，去除node_modules
+3. 使用命令`npm init`初始化工程，该命令会生成package.json文件用于描述该工程所安装的插件。可以通过命令` npm install pkg--save`来安装所需要的包，该命令会自动将包以及依赖写入package.json文件。
 
-   我的ale是这么配置的呀！`'javascript': ['prettier', 'eslint']`，用eslint的话必须eslint --init对当前文件夹进行初始化，emm，我看看用或者不用eslint效果怎么样，prettier怎么样好像是格式化和修复的，先这样看看吧，eslint好像很厉害，删除prettier了。
+4. 执行命令`eslint --init`，该命令用于ale的代码检查
 
-   体验非常好。
+5.  npm嫌慢的话可以配置一下`npm config set registry https://registry.npm.taobao.org`
 
-   通过一下流程进行项目开发：
+6. ok！
 
-   ```shell
-   # 跟python的pipenv一样，npm也有两个文件，一个package.json用于描述该项目用到了哪些module，package-lock.json则用于模块的依赖，跟pipenv差不多，pipenv的Pipfile用于描述模块，Pipfile.lock用于描述依赖
-   1. 首先新建一个文件夹，我们的工程文件夹
-   2. 接着npm init用于生成package.json
-   3. 接着安装需要的模块就好了，需要npm install module --save这样可以保存依赖到package.json的depencies中，自动更新package.json
-   4.  接着eslint --init用于ale的差错检测
-   5. 配置一下jsconfig.json文件
-   6. npm嫌慢的话可以配置一下`npm config set registry https://registry.npm.taobao.org`
-   现在就可以使用了
-   ```
-```
-   
-   Nice!!
+### java项目
 
-###### coc
+未详细使用
 
-这个插件好像很厉害，暂时先不用，先用ycm吧
+### go项目
 
-##### 语法检查
+未详细使用
 
-~~syntastic是一个很古老的工具，现在不使用了~~。
+### latex
 
-语法检查使用的是[ale](https://github.com/w0rp/ale)，该工具是一个异步语法检查工具，我还没整明白什么是linters，所以什么fix特性就先不整了，直接安装让他有代码错误提示就行了。
+未详细使用
 
-在init.vim中添加Plug 'w0rp/ale'，然后执行PlugInstall命令安装。
+### web
 
-之后需要进行配置，这个linter好像不同的语言需要不同的配置，~~一些linter好像在ale中内置了，不需要单独安装~~，应该是需要单独安装的。具体配置如下：
+未详细使用
 
-​```shell
-    let g:ale_linter_aliases = {'vue': ['css', 'javascript', 'typescript']}
-    let g:ale_linters = {
-                \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-                \   'asm': ['gcc'],
-                \   'nasm': ['nasm'],
-                \   'c': ['cppcheck', 'clang'],
-                \   'cpp': ['cppcheck', 'clang'],
-                \   'cmake': ['cmake-format'],
-                \   'python': ['pylint', 'flake8'],
-                \   'cuda': ['nvcc'],
-                \   'go': ['gofmt'],
-                \   'java': ['javac'],
-                \   'javascript': ['eslint'],
-                \   'shell': ['shell -n flag'],
-                \   'lua': ['luac'],
-                \   'yaml': ['prettier'],
-                \   'latex': ['alex'],
-                \   'vue': ['eslint'],
-                \ }
-```
+### markdown
 
-[支持列表](https://github.com/w0rp/ale/blob/master/supported-tools.md)这里可以看到ale所支持的语言。
+还是用typora吧
 
-研究生要学习cuda了，所以添加cuda，其他的c，c++就用clang了，python就用flake8吧，然后java用javac，js用eslint，latex后面再说，我对他还不是很了解，但是老师要求以后写论文都要用latex。
+### git
 
-这些linter需要单独安装，安装clang，jdk，cuda，flake8，prettier，eslint。
+我不太熟悉git，等熟悉了再来配置一下
 
-> arch 下面安装cuda之后找不到nvcc，查看arch wiki才发现cuda安装到/opt/cuda下面了，nvcc在/opt/cuda/bin下面，需要将/opt/cuda/bin添加到PATH中。
+### 其他
 
-总之，这个ale还不是很明白，先做个标记吧。
+其他使用deoplete
 
-cppcheck很厉害啊，可以检查bug而不是语法错误。
+## 其他
 
-##### 代码片段
+### 代码片段
 
-使用这个插件[SirVer/*ultisnips*](https://github.com/SirVer/ultisnips)，而且该插件向来与该插件[honza/*vim*-snippets](https://github.com/honza/vim-snippets)配合作，直接安装，配置快捷键。不过这货居然跟ycm冲突了，ultisnips使用的是tab按键进行扩展，而ycm使用的是tab来进行选择，我们需要更改ultisnips的快捷键值了，我从作者的[issue](https://github.com/SirVer/ultisnips/issues/512)里面找了一个配置，~~加进来了，使用ctrl enter来进行扩展~~。
+使用插件[SirVer/ultisnips](https://github.com/SirVer/ultisnips)与插件[honza/vim-snippets](https://github.com/honza/vim-snippets)，其中第一个插件是用于解析代码片段的，安装了他之后便可以将代码 片段的提示加入到ycm或者deoplete的提示框中，后一个插件是一些代码片段的集合，可以自己编辑一些代码片段。
 
-这个废弃了，看后面有更吊的配置，如果ycm能显示snip，那么直接回车就好了。
+在ycm或者deoplete的提示中，选中代码片段后直接回车便可以补全整个代码块，选中代码块之后可以使用方向键来跳转到下一个需要填写的地方。
 
-```shell
-" ultisnips
-let g:UltiSnipsSnippetsDir = '~/.cache/nvim_plugins/vim-snippets'
-"let g:UltiSnipsEditSplit="heroize"
-let g:UltiSnipsExpandTrigger       = "<C-R>"
-let g:UltiSnipsJumpForwardTrigger  = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+![代码块](assets/代码块.gif)
 
-" Enable tabbing through list of results
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
-endfunction
-
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
-" Expand snippet or return
-let g:ulti_expand_res = 0
-function! Ulti_ExpandOrEnter()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res
-        return ''
-    else
-        return "\<return>"
-endfunction
-
-" Set <space> as primary trigger
-inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
-```
-
-![ultisnips](./pic/ultinips.gif)
-
-最新的，来自[这里](https://github.com/Valloric/YouCompleteMe/issues/420#issuecomment-55940039)，测试了一下，原来这个功能是当出现提示列表的时候，无论你选中的是不是snip中的内容，按回车只要snip中有就补全，好吧更改快捷键了，不适用tab了，改用c l 和 c h了分别表示下一个和上一个。原来的c l c h切换buffer改成使用leaderf的了，先这样吧。
-
-##### 代码注释
+### 代码注释
 
 代码注释一般是使用[scrooloose/*nerdcommenter*](https://github.com/scrooloose/nerdcommenter)这个插件。
 
-这个挺好用的，他有一个快捷键 leader c space 这样子的，可以智能注释与反注释，我想将这个快捷键绑定到ctrl /上，但是没有成功，我就是这么绑定的`noremap <c-/> <leader>c<space>`，不知道为什么不可以。那还是用它自带的快捷键吧，leader c表示启动注释，然后后面在跟上相应的功能。
+该插件有一个快捷键 leader c space（是c不是ctrl）， 这样子的，可以智能注释与反注释。我想将这个快捷键绑定到ctrl /上，但是没有成功，我就是这么绑定的`noremap <c-/> <leader>c<space>`，不知道为什么不可以。那还是用它自带的快捷键吧，leader c表示启动注释，然后后面在跟上相应的功能。
 
-首先要知道切换，leader a可以在// 与 /*  */之间进行切换。
+关于该插件的使用，首先要知道如何切换注释形式，leader a可以在// 与 /*  */之间进行切换。
 
 ```shell
 leader c c 对选中区域进行注释，只能注释
@@ -409,9 +492,11 @@ leader c m 用这种方法进行注释
 leader c u 撤销注释
 ```
 
-我还是喜欢对其的，leader l或者leader c b，然后撤销使用leader c u，有时候使用leader c s
+我还是喜欢对齐的，leader l或者leader c b，然后撤销使用leader c u，有时候使用leader c s
 
-##### DoxygenToolkit
+![commenter](assets/commenter.gif)
+
+### 文档注释
 
 这个插件是一个函数注释生成插件，支持c c++ python。
 
@@ -421,280 +506,49 @@ leader c u 撤销注释
 
 DoxLic来输入许可证信息，一般在文件开头。
 
-先这么用着吧。
+![dox](assets/dox.gif)
 
-##### 代码格式化
+### tagbar
 
-格式化代码使用的是[Chiel92/vim-*autoformat*](https://github.com/Chiel92/vim-autoformat)这个工具，直接安装，然后不同的语言需要不同的后端，astyle支持c，c++，java，c#，autopep8支持python，同时ale也可以改用autopep8了，js使用eslint，然后json, html，css，sql啥的暂时先不管了。
+快捷键：F3
 
-js,json使用js-beautify
+需要安装ctags，原来想用leaderf代替来着，但是还是用回来了，呃～～
 
-这里主要是说的是，autoformat安装完成后就会自动去检查相应的格式化工具，调用默认的格式化方法，而我们想定制的话就要按照下面的这种方法来，贴一段作者的介绍：
+按下F3可以打开关闭tagbar，需要安装ctags。
 
-```shell
-The formatprograms that available for a certain <filetype> are defined in g:formatters_<filetype>. This is a list containing string identifiers, which point to corresponding formatter definitions. The formatter definitions themselves are defined in g:formatdef_<identifier> as a string expression. Defining any of these variable manually in your .vimrc, will override the default value, if existing. For example, a complete definition in your .vimrc for C# files could look like this:
+![tagbar](assets/tagbar.gif)
 
-let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=ansi -pcHs4"'
-let g:formatters_cs = ['my_custom_cs']
+### 文件管理器
 
-In this example, my_custom_cs is the identifier for our formatter definition. The first line defines how to call the external formatter, while the second line tells vim-autoformat that this is the only formatter that we want to use for C# files. Please note the double quotes in g:formatdef_my_custom_cs. This allows you to define the arguments dynamically:
+快捷键：
 
-let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=ansi -pcHs".&shiftwidth'
-let g:formatters_cs = ['my_custom_cs']
+1. F2快速打开或者关闭文件管理器
+2. alt o快速打开当前文件所在的目录
 
-Please notice that g:formatdef_my_custom_cs contains an expression that can be evaluated, as required. As you see, this allows us to dynamically define some parameters. In this example, the indent width that astyle will use, depends on the buffer local value of &shiftwidth, instead of being fixed at 4. So if you're editing a csharp file and change the shiftwidth (even at runtime), the g:formatdef_my_custom_cs will change correspondingly.
-```
+之前一直使用[vimfiler](https://github.com/Shougo/vimfiler.vim)，但是这个插件需要安装unite，作者现在已经不维护这个插件了，他推荐使用[defx](https://github.com/Shougo/defx.nvim)，这个插件在neovim下不需要安装unite了，直接安装这一个插件就可以使用了。
 
-下面是我的配置，对于c、c++、python的，其他的用到了再说，[clang-format](http://clang.llvm.org/docs/ClangFormatStyleOptions.html)参数说明，[astyle](http://astyle.sourceforge.net/astyle.html#_Quick_Start)使用说明，[autopep8](https://pypi.org/project/autopep8/)，现在也没人要求我用什么格式，所以我就按自个觉得好看的来了。嘿嘿嘿！！
+### 快速检索
 
-```shell
-autocmd FileType vim,tex let b:autoformat_autoindent=0
-" let g:autoformat_autoindent = 1
-" let g:autoformat_retab = 0
-" let g:autoformat_remove_trailing_spaces = 1
-"
-" 可以自定义格式化命令,
-" my_custom_cs是标签，表示一个命令，formatters_cs = []表示使用my_custom_cs对c#进行格式化
-" 其中cs表示文件类型，c cpp py js
-" let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=ansi -pcHs".&shiftwidth'
-" let g:formatters_cs = ['my_custom_cs']
-let g:formatdef_my_custom_c = '"astyle --mode=c --style=allman"'
-let g:formatters_c = ['my_custom_c']
-let g:formatdef_my_custom_h = '"astyle --mode=c --style=allman"'
-let g:formatters_h = ['my_custom_h']
-let g:formatdef_my_custom_cpp = '"astyle --style=mozilla"'
-let g:formatters_cpp = ['my_custom_cpp']
-let g:formatdef_my_custom_hpp = '"astyle --style=mozilla"'
-let g:formatters_hpp = ['my_custom_hpp']
+快捷键：
 
-let g:formatdef_my_custom_py = '"autopep8 --in-place --aggressive"'
-let g:formatters_py = ['my_custom_py']
-let g:formatdef_my_custom_java = '"astyle --mode=java --style=java"'
-let g:formatters_java = ['my_custom_java']
-let g:formatdef_my_custom_js = '"astyle --mode=java --style=java"'
-let g:formatters_js = ['my_custom_js']
-```
+1. alt s：模糊搜索当前文件内容
+2. alt S：模糊搜索所有buffer的内容
+3. alt r：模糊搜索最近打开的文件
+4. alt t：模糊搜索tag，标签，函数等
+5. alt T：模糊搜索当前所有buffer的标签
+6. alt b：模糊搜索打开的buffer
+7. <leader>f：模糊搜索文件
 
+![leaderf](assets/leaderf.gif)
 
+### 快速包围
 
-#### asm
+这个插件可以给单词围上一个符号或者更改包围某个单词的符号为另一个符号，或者更改html的标签，很酷吧。
 
-#####  二进制编辑工具
-
-[Shougo/vinarise.*vim*](https://github.com/Shougo/vinarise.vim)这个是二进制编辑工具，不过作者说不在维护了只修复bug，然后开发了新的插件[Deorise.nvim](https://github.com/Shougo/deorise.nvim)，但是这个仓库还没有开放呢～～
-
-![1554954438314](./pic/vinary.png)
-
-#### c/c++
-
-##### 配色
-
-[octol/vim-*cpp*-enhanced-highlight](https://github.com/octol/vim-cpp-enhanced-highlight)这个工具可以让cpp文件的配色更适合敲代码
-
-#### python
-
-#### js
-
-#### java
-
-#### latex
-
-### 工具
-
-#### git版本控制
-
-这个得先熟悉git怎么用才行。
-
-#### ×文本块操作
-
-
-
-#### defx 文件管理器
-
-之前一直使用[vimfiler](https://github.com/Shougo/vimfiler.vim)，但是这个插件需要安装unite，作者现在已经不维护这个插件了，他推荐使用[defx](https://github.com/Shougo/defx.nvim)，好吧，这个插件不需要安装unite了，直接安装这一个插件就可以使用了。
-
-在init.vim文件中添加 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }，然后执行PlugInstall，等待安装成功之后就可以使用了，但是这个插件是需要配置才更好用的，从网上搜了好多都没有搜到怎么配置，作者的[doc](https://github.com/Shougo/defx.nvim/tree/master/doc)里面有一个介绍，如何使用defx，同时我也参考了spacevim中的一部分配置，自己瞎作了一下就可以用了，跟我之前使用vimfiler一样的感觉。配置如下，可以直接丢到init.vim中用：
+如下是一些用法，可以用来参考。
 
 ```shell
-nnoremap <F2> <esc>:Defx<cr>	" 按F2打开关闭defx
-call defx#custom#option('_', {  " 比如文件管理器窗口的宽度，显示方式等在这里配置
-      \ 'winwidth': 30,			
-      \ 'split': 'vertical',
-      \ 'direction': 'leftabove',
-      \ 'show_ignored_files': 0,
-      \ 'buffer_name': '',
-      \ 'toggle': 1,
-      \ 'resume': 1
-      \ })
-
-call defx#custom#column('filename', { 
-      \ 'directory_icon': '▸',
-      \ 'opened_icon': '▾',
-      \ 'root_icon': ' ',
-      \ 'min_width': 40,
-      \ 'max_width': 40,
-      \ })
-
-call defx#custom#column('mark', {
-      \ 'readonly_icon': '✗',
-      \ 'selected_icon': '✓',
-      \ })
-
-autocmd FileType defx call s:defx_my_settings()
-function! s:defx_my_settings() abort
-  nnoremap <silent><buffer><expr> '
-        \ defx#do_action('toggle_select') . 'j'  " '选中并移动到下一行
-  nnoremap <silent><buffer><expr> *
-        \ defx#do_action('toggle_select_all')
-  nnoremap <silent><buffer><expr> X              " 使用系统默认软件打开
-        \ defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> yy			 " 复制一个文件或者文件夹
-        \ defx#do_action('copy')
-  nnoremap <silent><buffer><expr> q				  " 退出"
-        \ defx#do_action('quit')
-  nnoremap <silent><buffer><expr> m				  " 移动"
-        \ defx#do_action('move')
-  nnoremap <silent><buffer><expr> p               " 粘贴"
-        \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> h               " hjkl 四个方向键可以自己探索了"
-        \ defx#is_opened_tree() ?
-        \ defx#do_action('close_tree') : defx#do_action('cd', ['..'])
-  nnoremap <silent><buffer><expr> l 
-        \ defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> o 
-        \ defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> <Cr>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_directory') : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> <2-LeftMouse>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree') : defx#do_action('drop')
-  nnoremap <silent><buffer><expr> sv				" 垂直分割打开一个新的窗口，文件将在这里展示"
-        \ defx#do_action('drop', 'vsplit')
-  nnoremap <silent><buffer><expr> sh				" 水平分割"
-        \ defx#do_action('drop', 'split')
-  nnoremap <silent><buffer><expr> S                	" 排序"
-        \ defx#do_action('toggle_sort', 'time')
-  nnoremap <silent><buffer><expr> st				" 打开一个新的tab来编辑"
-        \ defx#do_action('drop', 'tabedit')
-  nnoremap <silent><buffer><expr> P
-        \ defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> N					" 新建一个文件/文件夹， 名字后面带/ 表示文件夹"
-        \ defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> dd
-        \ defx#do_action('remove')
-  nnoremap <silent><buffer><expr> r
-        \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> .					" 显示隐藏文件"
-        \ defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> ~
-        \ defx#do_action('cd')
-  nnoremap <silent><buffer><expr> !  
-        \ defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> j
-        \ line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k
-        \ line('.') == 1 ? 'G' : 'k'
-  nnoremap <silent><buffer><expr> <C-r>
-        \ defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> <C-g>
-        \ defx#do_action('print')
-  nnoremap <silent><buffer><expr> cd
-        \ defx#do_action('change_vim_cwd')
-endf
-
-" in this function we should vim-choosewin if possible
-function! DefxSmartL(_)
-  if defx#is_directory()
-    call defx#call_action('open_tree')
-    normal! j
-  else
-    let filepath = defx#get_candidate()['action__path']
-    if tabpagewinnr(tabpagenr(), '$') >= 3    " if there are more than 2 normal windows
-      if exists(':ChooseWin') == 2
-        ChooseWin
-      else
-        if has('nvim')
-          let input = input({
-                \ 'prompt'      : 'ChooseWin No.: ',
-                \ 'cancelreturn': 0,
-                \ })
-          if input == 0 | return | endif
-        else
-          let input = input('ChooseWin No.: ')
-        endif
-        if input == winnr() | return | endif
-        exec input . 'wincmd w'
-      endif
-      exec 'e' filepath
-    else
-      exec 'wincmd w'
-      exec 'e' filepath
-    endif
-  endif
-endfunction
-
-```
-
-上面是defx的配置，可以直接拿来用了，效果如下：
-
-![defx](./pic/defx.gif)
-
-
-
-#### leaderf
-
-这也是一个很厉害的工具，模糊搜索，不过neovim出来悬浮窗口了，我觉得这个工具跟悬浮窗口组合一下会相当好用的。
-
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }，然后执行PlugInstall安装leaderf
-
-默认的快捷键是<leader> f 打开文件搜索框，<leader> b 打开buffer搜索框，然后稍微配置了一下
-
-```shell
-nnoremap <leader>t :LeaderfBufTag<CR>
-nnoremap <leader>T :LeaderfBufTagAll<CR>
-nnoremap <leader>l :LeaderfLine<CR>
-nnoremap <leader>L :LeaderfLineAll<CR>
-```
-
-这样可以使用<leader>t 打开当前buf的tag，<leader>T可以打开当前所有buf的tag了，感觉可以代替tagbar了，我不打算安装tagbar了。
-
-算了，在我这里应该改成叫altf，哈哈哈，全都改成alt按键了，把leader省出来给easymotion。
-
-不过据我观察好像这个leaderf的使用频率不如easymotion，所以我想把leaderf改成leader，然后easymotion使用alt。
-
-权衡了一下改成了下面这样子
-
-```shell
-"leaderf
-nnoremap <leader>f :LeaderfFile<CR>
-nnoremap <M-t> :LeaderfBufTag<CR>
-nnoremap <M-T> :LeaderfBufTagAll<CR>
-nnoremap <M-b> :LeaderfBuffer<CR>
-nnoremap <M-s> :LeaderfLine<CR>
-nnoremap <M-S> :LeaderfLineAll<CR>
-highlight Lf_hl_match gui=bold guifg=Red cterm=bold ctermfg=21
-highlight Lf_hl_matchRefine  gui=bold guifg=Magenta cterm=bold ctermfg=201
-```
-
-leader f用于搜索文件，然后其他的依然是alt，后面配置一下easymotion，尽可能让常用的功能用alt和ctrl完成。
-
-总结一下吧，这个leaderf和easymotion有点混乱，leaderf的模糊搜索很厉害，我把alt + s定义为搜索（search），搜索每一行，alt + S则是搜索所有buffer的每一行。alt t则表示tags，alt b则表示buffers
-
-在easymotion中，alt hjkl分别表示向某一方向移动，不过我觉得jk不太常用，到时hl很常用，让alt f（find）多窗口搜索一个字母，alt + L多窗口跳转行，反正jk不是很常用，直接将alt j改成行吧，既然这样，alt k留着没用，让他代替f吧，alt k表示按字母搜托跳转吧。
-
-#### auto-pairs
-
-括号自动补全，安装就完事了，这个也不用配置什么东西，alt n跳出括号。
-
-#### vim-surround
-
-这个插件可以给单词围上一个符号或者更改包围某个单词的符号为另一个符号。
-
-主要是怎么用，作者在github给出了用法。
-
-```shell
-cs"'
+![leaderf](../../Videos/sreenRecording/leaderf.gifcs"'
 这个意思是change surround \" \',就是将 \" 改成 \'
 cs'<q>
 这个的意思是 change surround ' to <q>，就是将'改成<q> </q>
@@ -710,50 +564,48 @@ dst
 对于任意范围的添加，则在V模式下选择之后直接S+符号即可
 ```
 
-#### goyo
+![surround](assets/surround.gif)
 
-一个可以让你专注阅读的工具，废话不多说，直接安装即可。Plug 'junegunn/goyo.vim'。这个可以搭配limelight使用，不过goyo在退出时主题就不透明了不知道为什么。
+在repeat插件的加持下，按点"."可以重复上次加括号减括号改括号等的操作。
 
-在作者的issue中找到了答案，原来，goyo在退出的时候会重新加载主题但是他不会加载你自己在配置文件中配置的主题内容，进行如下更改便可以了。
+### 窗口切换
 
-```shell
-function! s:patch_lucius_colors()
-	" 这部分是你自己的配置，我的配置如下
-    set termguicolors
-    hi Normal     ctermbg=NONE guibg=NONE
-    hi LineNr     ctermbg=NONE guibg=NONE
-    hi SignColumn ctermbg=NONE guibg=NONE
-    hi Comment guifg=#5C6370 ctermfg=59
-endfunction
-" 写主题名称，我用的主题是space-vim-dark
-autocmd! ColorScheme space-vim-dark call s:patch_lucius_colors()
-" 写主题名称，我用的主题是space-vim-dark
-colorscheme space-vim-dark
-```
+快捷键：alt w
 
-最终，goyo与limelight的配置如下，按下F10就可以进入goyo状态，同时也是limelight状态，再次按下F10便可退出goyo状态，同时也退出limelight状态
+在打开好多个窗口之后我们希望能够快速定位到其中的一个窗口，[t9md/vim-*choosewin*](https://github.com/t9md/vim-choosewin)便是一个窗口切换插件，可以选择窗口也可以交换窗口，映射了一下快捷键，alt w变启动choosewindow，然后此时可以选择窗口，或者按下s，可以将当前窗口与目标窗口进行交换。
 
-```shell
-" goyo
-let g:goyo_width = '80'
-let g:goyo_height = '90%'
-nnoremap <F10> <esc>:Goyo<cr>
+其实我更希望的是buffer与windows都能够通过neovim最新的悬浮窗口进行选择。
 
-" limelight
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-let g:limelight_conceal_guifg = 'DarkGray'
-let g:limelight_conceal_guifg = '#777777'
-let g:limelight_default_coefficient = 0.7
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-```
+![choosewin](pic/choosewin.gif)
 
-![goyo-limelight](./pic/goyo-limelight.gif)
+### 平滑翻屏
 
+在使用ctrl f，ctrl b， ctrl d，ctrl u进行滑动的时候，neovim会直接翻一屏或者半屏，而插件[terryma/*vim*-*smooth*-*scroll*](https://github.com/terryma/vim-smooth-scroll)则可以在使用ctrl f/b/d/u翻屏时进行滚动
 
+![scroll](pic/scroll.gif)
 
-#### 去除后面的空白
+### 快速移动
+
+快捷键：
+
+1. alt h：行内快速移动（废弃）
+2. alt j：快速移动到行
+3. alt k：根据字母进行快速移动
+4. alt l：行内快速移动（废弃）
+
+![easymotion](assets/easymotion.gif)
+
+### 二进制编辑工具
+
+输入:Vinarise即可。
+
+![1554954438314](./assets/vinary.png)
+
+### 括号补全与跳出括号
+
+括号补全使用的是auto-pairs插件，使用alt n跳出括号
+
+### 去除空白
 
 以前用的插件是[*vim*-trailing-*whitespace*](https://github.com/bronson/vim-trailing-whitespace)，这是一个很古老的插件了，现在改用[ntpeters/*vim*-better-*whitespace*](https://github.com/ntpeters/vim-better-whitespace)了，这个插件可以自定义空白的颜色，比如我定义为白色，然后可以设置保存的时候自动去除空白。
 
@@ -763,114 +615,17 @@ let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 ```
 
-#### 窗口切换
+![whitespace](assets/whitespace.gif)
 
-在打开好多个窗口之后我们希望能够快速定位到其中的一个窗口，[t9md/vim-*choosewin*](https://github.com/t9md/vim-choosewin)便是一个窗口切换插件，可以选择窗口也可以交换窗口，映射了一下快捷键，alt w变启动choosewindow，然后此时可以选择窗口，或者按下s，可以将当前窗口与目标窗口进行交换。
+### 阅读
 
-其实我更希望的是buffer与windows都能够通过neovim最新的悬浮窗口进行选择。
+快捷键：
 
-![choosewin](./pic/choosewin.gif)
+1. F10
 
-#### easymotion
+阅读使用的插件是[junegunn/goyo.vim]()和[junegunn/limelight.vim]()
 
-快速移动插件，或者说快速定位插件[easymotion/*vim*-*easymotion*](https://github.com/easymotion/vim-easymotion)，默认启动按键是按两次leader，不过对于我来说我用的次数好像不是很多，但是相比leaderf的使用次数来说是比较多的。我的配置如下
-
-```shell
-" easymotion
-" 用什么作为开头
-"map <M> <Plug>(easymotion-prefix)
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-map <M-l> <Plug>(easymotion-lineforward)
-" map <M-j> <Plug>(easymotion-j)
-" map <M-k> <Plug>(easymotion-k)
-map <M-h> <Plug>(easymotion-linebackward)
-map <M-k> <Plug>(easymotion-bd-f)
-nmap <M-k> <Plug>(easymotion-overwin-f)
-" Move to line
-map <M-j> <Plug>(easymotion-bd-jk)
-nmap <M-j> <Plug>(easymotion-overwin-line)
-```
-
-alt + hijk
-
-![easymotion](./pic/easymotion.gif)
-
-#### tagbar
-
-原来想用leaderf代替来着，但是还是用回来了，呃～～
-
-```shell
-" tagbar
-let g:tagbar_width = 35
-function! Tagbar_Toggle()
-    if bufname('%') == '__Tagbar__.1'
-        execute "normal! :TagbarClose\<cr>"
-    else
-        execute "normal! :TagbarOpen j\<cr>"
-    endif
-endfunction
-nnoremap <F3> :call Tagbar_Toggle()<CR>
-```
-
-按下F3可以打开关闭tagbar，需要安装ctags。
-
-### 美化
-
-#### 欢迎界面
-
-开启neovim时显示一个欢迎界面，直接安装使用即可Plug 'mhinz/vim-startify'
-
-#### airline
-
-一个很厉害的状态栏插件，这个插件自带buffers，就是顶部的那个buffers，不过需要设置
-
-```shell
-let g:airline#extensions#tabline#enabled = 1
-```
-
-其他的比如git，时间显示，warning，error等等内容，在安装相应的插件之后会自动显示的。
-
-安装airline，在init.vim中添加Plug 'vim-airline/vim-airline'，同时，该插件也支持主题选择，可以在init.vim中添加Plugin 'vim-airline/vim-airline-themes'主题插件，然后执行:PlugInstall安装插件。安装成功后，可以使用如下命令设置主题：
-
-```shell
-let g:airline_theme='the theme name'
-```
-
-我已经过了追求主题的年龄了，对这些不太感兴趣，直接默认就好了。
-
-另外该插件需要字体补丁，执行下面的命令安装字体补丁
-
-```shell
-git clone https://github.com/powerline/fonts.git
-cd fonts
-sh ./install.sh
-```
-
-这样，字体补丁便会安装到~/.local/share/fonts下面了。
-
-整体配置如下
-
-```shell
-let g:airline_powerline_fonts = 1 
-let g:airline#extensions#tabline#enabled = 1    " 打开buffer
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type= 2
-let g:airline#extensions#tabline#show_tab_type = 1
-let g:airline#extensions#tabline#tabs_label = 'TABS'
-let g:airline#extensions#tabline#left_alt_sep = '|'      "tabline中buffer显示编号
-let g:airline#extensions#tabline#buffer_nr_show = 1  
-
-nmap <c-h> <Plug>AirlineSelectPrevTab	" 按住ctrl h 选择左侧一个buffer"
-nmap <c-l> <Plug>AirlineSelectNextTab   " 按住ctrl l 选择右侧一个buffer"
-```
-
-安装完成后这个样子
-
-![1554809264668](./pic/airline.gif)
-
-#### indentline
+### 缩进
 
 一个缩进指示插件，直接在init.vim中添加Plug 'Yggdroot/indentLine'然后执行PLugInstall安装就可以使用了，懒得详细配置了。还是稍微配置一下吧，不同的缩进符号不同。
 
@@ -881,42 +636,8 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊', '▏']
 
 ![1554880711126](./pic/indentline.png)
 
-#### rainbow
-
-彩虹括号，直接安装就好了，Plug 'luochen1990/rainbow'，然后执行PlugInstall
-
-#### vim-cpp-enhanced-highlight
-
-这个插件是对c，c++进行语法高亮的，比vim自带的高亮要好
-
-#### 图标
+### 图标
 
 [ryanoasis/vim-*devicons*](https://github.com/ryanoasis/vim-devicons)这个插件可以显示图标，但是必须安装这个字体[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts)或者来[这里](https://github.com/ryanoasis/nerd-fonts/releases)找一下合适的release。
 
-```shell
-mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
-```
-
-
-
-#### 平滑滑动
-
-在使用c f，c b， c d，c u进行滑动的时候，neovim会直接翻一屏或者半屏，而插件[terryma/*vim*-*smooth*-*scroll*](https://github.com/terryma/vim-smooth-scroll)则可以在翻屏时进行滚动，我的配置如下：
-
-```shell
-" smooth scroll
-" scroll代表半屏，distance duration speed
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 6, 1)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 6, 1)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 8, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
-```
-
-效果如下
-
-![scroll](./pic/scroll.gif)
-
-### 其他
-
-其他插件
+### 快捷键

@@ -12,24 +12,23 @@ call plug#begin('~/.cache/plugins')
 " 去youcomplete.vim中设置白名单
 Plug 'Valloric/YouCompleteMe',
     \ {
-    \ 'do': './install --clang-completer --clangd-completer --go-completer --ts-completer --java-completer',
-    \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'ts', 'java', 'go' ]
+    \ 'do': './install --clang-completer --go-completer --ts-completer --java-completer',
     \ }
+    " 直接设置白名单
+    " \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'ts', 'java', 'go' ]
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'for': ['html', 'css', 'xml', 'sh', 'json', 'vim']}
-
-
-"""""""""""c"""""""""""
-
-"""""""""""python"""""""""""
-
-"""""""""""js"""""""""""
+Plug 'Shougo/deoplete.nvim',
+    \ {
+    \ 'do': ':UpdateRemotePlugins',
+    \ }
+    " \ 'for': ['html', 'css', 'xml', 'sh', 'json', 'vim']
 
 """""""""""web"""""""""""
 Plug 'mattn/emmet-vim', {'for': [ 'html','htm', 'xml', 'xhtml', 'css' ]}
 Plug 'alvan/vim-closetag', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}
 Plug 'gko/vim-coloresque', {'for': ['html', 'htm', 'xml', 'xhtml', 'css', 'vim']}
-Plug 'valloric/MatchTagAlways', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}
+Plug 'valloric/MatchTagAlways', {'for': ['html', 'htm', 'xml', 'xhtml', 'css', 'vim']}
+
 
 """""""""""latex"""""""""""
 " latex 插件
@@ -42,13 +41,13 @@ Plug 'lervag/vimtex',
 " repl
 " Plug 'sillybun/vim-repl', {'do':'./install.sh', 'for': ['python', 'bash', 'sh']}
 " 异步执行
-Plug 'skywind3000/asyncrun.vim', {'for': ['python', 'javascript', 'c', 'cpp', 'sh', 'go', 'ts', 'java']}
+" Plug 'skywind3000/asyncrun.vim', {'for': ['python', 'javascript', 'c', 'cpp', 'sh', 'go', 'ts', 'java']}
 
 """""""""""general"""""""""""""
 " 代码检查 ale
 Plug 'w0rp/ale',
     \ {
-    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'vim', 'tex'],
+    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'javascript', 'ts', 'java', 'go', 'html', 'css', 'sh', 'vim', 'tex'],
     \ }
 
 " 格式化代码

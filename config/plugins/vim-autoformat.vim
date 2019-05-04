@@ -4,7 +4,7 @@
 " if !empty(glob(plug_home."/vim-autoformat"))
 
     " 需要安装相应的格式化工具
-    " js-beautiful:js, html, css
+    " js-beautiful:js, html, css, json
     " astyle:c, c++, java,
     " autopep8:python
     "
