@@ -10,6 +10,8 @@
 
 这次我学聪明了，我将各个插件的配置从以前的一个配置文件中分离出来，每个插件都有自己的一个配置文件，这样既方便修改，也方便分享，别人觉得你的配置好直接把这个文件给他就好了，一目了然。
 
+目前第一次打开的速度有点慢，但是打开一次之后后面启动都比较快，我正在尝试更改插件管理器vim-plug为dein。
+
 ## 配置结构
 
 首先这次的配置结构如下，当前的配置结构仅仅是我最初的设想，由于水平有限，我还没有实现我一个更好的设想，这个后期或许会考虑，先贴一下这次的总体结构，后面说一下我更好的设想。
@@ -226,7 +228,7 @@ let g:ale_linters = {
 
 ## 开发使用
 
-对于不同的项目，我尽量搜寻最合适的插件与配置，开发不同的项目只需要载入不同的配置就好了。
+对于不同的项目，我尽量搜寻最合适的插件与配置，提供最佳的开发体验。
 
 ### c/c++项目
 
@@ -234,7 +236,7 @@ let g:ale_linters = {
 
    ![ycm头文件与跳转](assets/ycm头文件与跳转.gif)
 
-2. 声明与定义的跳转leader  g
+2. 声明与定义的跳转leader  j
 
    ![ycm定义的跳转](assets/ycm定义的跳转.gif)
 
@@ -300,7 +302,7 @@ flags = [
 
    ![python语义补全](assets/python语义补全-1556929792869.gif)
 
-2. python的跳转leader  g![ycmpython跳转](assets/ycmpython跳转.gif)
+2. python的跳转leader  j![ycmpython跳转](assets/ycmpython跳转.gif)
 
 要实现以上功能，其实也不需要做什么事情，打开python文件coding就行了。
 
@@ -365,7 +367,7 @@ flags = [
 
    ![js语义补全](assets/js语义补全.gif)
 
-2. js跳转leader g
+2. js跳转leader j
 
    ![跳转](assets/跳转.gif)
 
@@ -466,6 +468,12 @@ js工程的开发需要经过如下步骤
 ## 通用
 
 ### 代码片段
+
+快捷键：
+
+1. 扩展代码块：alt l，或者在出现补全列表的情况下选中之后按下回车
+2. 跳到下一个空位：alt l
+3. 跳到上一个空位：alt h
 
 使用插件[SirVer/ultisnips](https://github.com/SirVer/ultisnips)与插件[honza/vim-snippets](https://github.com/honza/vim-snippets)，其中第一个插件是用于解析代码片段的，安装了他之后便可以将代码 片段的提示加入到ycm或者deoplete的提示框中，后一个插件是一些代码片段的集合，可以自己编辑一些代码片段。
 

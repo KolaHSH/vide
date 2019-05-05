@@ -10,6 +10,9 @@
 "     \   'java': ['astyle --style=java'],
 "     \}
 
+" vim支持悬浮?
+let g:ale_set_balloons = 1
+
 " 定义别名，vue代表css js ts，均使用eslint
 let g:ale_linter_aliases = {'vue': ['css', 'javascript', 'typescript']}
 let g:ale_linters = {

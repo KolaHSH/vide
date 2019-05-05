@@ -36,6 +36,12 @@ else
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+"""""""""""git"""""""""""
+Plug 'tpope/vim-fugitive'
+Plug 'neoclide/vim-easygit'
+Plug 'tpope/vim-fugitive'
+Plug 'rhysd/git-messenger.vim'
+
 """""""""""web"""""""""""
 Plug 'mattn/emmet-vim', {'for': [ 'html','htm', 'xml', 'xhtml', 'css' ]}
 Plug 'alvan/vim-closetag', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}

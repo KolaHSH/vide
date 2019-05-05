@@ -26,7 +26,7 @@ noremap <C-right> <C-w><C-l>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 " youcompleteme key map
 " 快速跳转
-nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>j :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"

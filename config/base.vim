@@ -45,3 +45,4 @@ let autosave=10
 "set conceallevel=0  " json正常显示文本
 "这样quickfix里面的跳转会先复用已有文件的窗口，再复用已有标签，最后没有的话新建标签
 set switchbuf=useopen,usetab,newtab
+set tw=80
