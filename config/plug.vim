@@ -16,6 +16,13 @@ Plug 'Valloric/YouCompleteMe',
     \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'javascript.jsx', 'ts', 'java', 'go' ]
     \ }
     " 直接设置白名单
+    "
+
+" Plug 'neoclide/coc.nvim',
+"             \ {
+"             \ 'tag': '*',
+"             \ 'do': './install.sh',
+"             \ }
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim',

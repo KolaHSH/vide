@@ -232,11 +232,11 @@ let g:ale_linters = {
 
 ### c/c++项目
 
-1. 头文件的补全与跳转<leader> g
+1. 头文件的补全与跳转leader g
 
    ![ycm头文件与跳转](assets/ycm头文件与跳转.gif)
 
-2. 声明与定义的跳转<leader> g
+2. 声明与定义的跳转leader  g
 
    ![ycm定义的跳转](assets/ycm定义的跳转.gif)
 
@@ -302,7 +302,7 @@ flags = [
 
    ![python语义补全](assets/python语义补全-1556929792869.gif)
 
-2. python的跳转<leader> g![ycmpython跳转](assets/ycmpython跳转.gif)
+2. python的跳转leader  g![ycmpython跳转](assets/ycmpython跳转.gif)
 
 要实现以上功能，其实也不需要做什么事情，打开python文件coding就行了。
 
@@ -367,7 +367,7 @@ flags = [
 
    ![js语义补全](assets/js语义补全.gif)
 
-2. js跳转<leader>g
+2. js跳转leader g
 
    ![跳转](assets/跳转.gif)
 
@@ -479,7 +479,7 @@ js工程的开发需要经过如下步骤
 
 代码注释一般是使用[scrooloose/*nerdcommenter*](https://github.com/scrooloose/nerdcommenter)这个插件。
 
-该插件有一个快捷键 leader c space（是c不是ctrl）， 这样子的，可以智能注释与反注释。我想将这个快捷键绑定到ctrl /上，但是没有成功，我就是这么绑定的`noremap <c-/> <leader>c<space>`，不知道为什么不可以。那还是用它自带的快捷键吧，leader c表示启动注释，然后后面在跟上相应的功能。
+该插件有一个快捷键 leader c space（是c不是ctrl）， 这样子的，可以智能注释与反注释。我想将这个快捷键绑定到ctrl /上，但是没有成功，我就是这么绑定的`noremap <c-/> leader c<space>`，不知道为什么不可以。那还是用它自带的快捷键吧，leader c表示启动注释，然后后面在跟上相应的功能。
 
 关于该插件的使用，首先要知道如何切换注释形式，leader a可以在// 与 /*  */之间进行切换。
 
@@ -545,7 +545,7 @@ DoxLic来输入许可证信息，一般在文件开头。
 4. alt t：模糊搜索tag，标签，函数等
 5. alt T：模糊搜索当前所有buffer的标签
 6. alt b：模糊搜索打开的buffer
-7. <leader>f：模糊搜索文件
+7. leader f：模糊搜索文件
 
 ![leaderf](assets/leaderf.gif)
 
