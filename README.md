@@ -65,13 +65,13 @@
 4. node 用于js补全
 5. npm 用于js的包管理
 6. jdk 用于java补全
-7. cppcheck 用于ale的语法检查
-8. pylint 用于python的语法检查
-9. flake8 用于python的语法检查
-10. eslint 用于js，ts的语法检查
-11. astyle 用于c，cpp，java的代码格式话工具
-12. autopep8 用于python 的代码格式化工具
-13. js-beautiful 用于js（js也可以用eslint格式化代码，需要配置）, json的格式化
+7. cppcheck 用于ale的c/c++语法检查
+8. pylint 用于ale的python的语法检查
+9. flake8 用于ale的python的语法检查
+10. eslint 用于ale的js，ts的语法检查
+11. astyle 用于autoformat的c，cpp，java的代码格式话工具
+12. autopep8 用于autoformat的python 的代码格式化工具
+13. js-beautiful 用于autoformat的js（js也可以用eslint格式化代码，需要配置）, json的格式化
 14. xclip或者xsel用于neovim使用系统剪切板
 15. python-neovim 要想使用neovim，需要安装这个软件
 16. pipenv或者virtualenv用于python的虚拟环境
@@ -92,8 +92,6 @@ cd fonts
 ~~或者来这里下载我的dotfile，里面包含了所需字体，主题等~~
 
 ### 安装
-
-作为一个开发者，一般上述工具都会安装了。
 
 对于neovim，安装完上述工具之后把该项目克隆到~/.config/nvim下面，然后进入neovim，执行:PlugInstall等待安装完成就ok了。
 
