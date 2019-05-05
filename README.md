@@ -230,7 +230,7 @@ let g:ale_linters = {
 
 ### c/c++项目
 
-1. 头文件的补全与跳转leader g
+1. 头文件的补全
 
    ![ycm头文件与跳转](assets/ycm头文件与跳转.gif)
 
@@ -461,7 +461,7 @@ js工程的开发需要经过如下步骤
 
 ### 其他
 
-其他使用deoplete
+其他使用deoplete，近期想更换为coc
 
 ## 通用
 
