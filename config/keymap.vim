@@ -13,7 +13,7 @@ nnoremap ;; <esc>:
 nnoremap q <esc>:close<cr>
 vnoremap q <esc>:close<cr>
 nnoremap <BackSpace> :nohl<cr>
-map <F4> <esc>:wal<cr>
+"map <F4> <esc>:wal<cr>
 " noremap u uzz
 " 窗口
 noremap <C-left> <C-w><C-h>
@@ -34,6 +34,10 @@ nnoremap <leader>j :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " 跳转到上一个警告或者错误处
 nmap <silent> <c-k> <Plug>(ale_previous_wrap)
 nmap <silent> <c-j> <Plug>(ale_next_wrap)
+nn <silent> <M-d> :ALEGoToDefinition<cr>
+nn <silent> <M-r> :ALEFindReferences<cr>
+nn <silent> <M-a> :ALESymbolSearch<cr>
+nn <silent> <M-h> :ALEHover<cr>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -67,11 +71,11 @@ nnoremap <M-r> :LeaderfMru<CR>
 " 使用F+char
 " map <M-h> <Plug>(easymotion-linebackward)
 " move to char
-map <M-k> <Plug>(easymotion-bd-f)
+" map <M-k> <Plug>(easymotion-bd-f)
 nmap <M-k> <Plug>(easymotion-overwin-f)
 " Move to line
-map <M-j> <Plug>(easymotion-bd-jk)
-nmap <M-j> <Plug>(easymotion-overwin-line)
+" map <M-l> <Plug>(easymotion-bd-jk)
+nmap <M-l> <Plug>(easymotion-overwin-line)
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -113,9 +117,9 @@ function Open_cur_file_dir()
     exec 'Defx '.g:cur_dir
 endfunction
 
-nnoremap <F2> <esc>:Defx<cr>
-nnoremap <M-o> <esc>:call Open_cur_file_dir()<cr>
-" nnoremap <F2> <esc>:call Open_cur_file_dir()<cr>
+" nnoremap <F2> <esc>:Defx<cr>
+" nnoremap <M-o> <esc>:call Open_cur_file_dir()<cr>
+nnoremap <F2> <esc>:call Open_cur_file_dir()<cr>
 "
 "
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -132,9 +136,9 @@ noremap <F9> :call asyncrun#quickfix_toggle(12)<cr>
 " vim-transtrateme
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 " 普通模式，<Leader>d 翻译光标下的文本，在命令行回显翻译内容
-nmap <silent> <Leader>t <Plug>Translate
+" nmap <silent> <Leader>t <Plug>Translate
 " 可视模式，<Leader>d 翻译光标下的文本，在命令行回显翻译内容
-vmap <silent> <Leader>t <Plug>TranslateV
+" vmap <silent> <Leader>t <Plug>TranslateV
 " 普通模式，<Leader>w 翻译光标下的文本，在窗口中显示翻译内容
 " nmap <silent> <Leader>w <Plug>TranslateW
 nmap <silent> <M-d> <Plug>TranslateW
@@ -145,3 +149,20 @@ vmap <silent> <M-d> <Plug>TranslateWV
 nmap <silent> <Leader>r <Plug>TranslateR
 " 可视模式，<Leader>r 替换光标下的文本为翻译内容
 vmap <silent> <Leader>r <Plug>TranslateRV
+
+
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" vim-expand-region
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" map J <Plug>(expand_region_expand)
+" map K <Plug>(expand_region_shrink)
+"
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" vim-mundo
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+map <F4> <esc>:MundoToggle<cr>
+
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+" startify
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+noremap <leader>s <esc>:Startify<cr>

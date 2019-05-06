@@ -1,0 +1,41 @@
+{
+    "suggest.timeout": 2000,
+    "suggest.noselect": true,
+    /// 错误信息给ale，这样就整合了, 等待ale的floatwindow
+    "diagnostic.displayByAle": true,
+    "suggest.detailField": "abbr",
+    // coc-python
+    // 自动添加括号
+    "python.autoComplete.addBrackets": true,
+    "python.jediEnabled": true,
+    // coc-java
+    // coc-highlight
+    "coc.preferences.colorSupport": true,
+    "highlight.colors.enable": true,
+    "highlight.document.enable": true,
+    // lsp
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "cuda",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": ".ccls-cache"
+                }
+            }
+        }
+    }
+}

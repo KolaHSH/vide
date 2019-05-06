@@ -46,3 +46,10 @@ let autosave=10
 "这样quickfix里面的跳转会先复用已有文件的窗口，再复用已有标签，最后没有的话新建标签
 set switchbuf=useopen,usetab,newtab
 set tw=80
+
+" 来自coc
+set cmdheight=2
+set shortmess+=c
+
+
+

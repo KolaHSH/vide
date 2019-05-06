@@ -23,10 +23,10 @@ let g:ale_linters = {
             \   'cpp': ['cppcheck', 'clang'],
             \   'cmake': ['cmake-format'],
             \   'python': ['pylint', 'flake8'],
+            \   'javascript': ['eslint'],
             \   'cuda': ['nvcc'],
             \   'go': ['gofmt'],
             \   'java': ['javac'],
-            \   'javascript': ['eslint'],
             \   'shell': ['shell -n flag'],
             \   'lua': ['luac'],
             \   'yaml': ['prettier'],
@@ -58,4 +58,16 @@ highlight clear ALEWarningSign
 
 " endif
 " ale config end
+"
 
+" coc 使用微软的python
+" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+"
+"ccls
+let g:ale_cpp_ccls_init_options = {
+    \   'cache': {
+    \       'directory': '/tmp/ccls/cache',
+    \   },
+    \ }
+let g:ale_completion_enabled = 1

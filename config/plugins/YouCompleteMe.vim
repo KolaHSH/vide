@@ -54,13 +54,15 @@ let g:ycm_filetype_whitelist = {
             \ 'h': 1,
             \ 'hpp': 1,
             \ "cpp":1,
-            \ "python":1,
-            \ "javascript":1,
-            \ "javascript.jsx":1,
-            \ "java":1,
-            \ "ts":1,
             \ "go":1,
             \ }
+            " \ "java":1,
+            " \ "ts":1,
+            " \ "python":1,
+            " \ "javascript":1,
+            " \ "javascript.jsx":1,
+
+
 " let g:ycm_filetype_blacklist = {
 "         \ 'tagbar': 1,
 "         \ 'notes': 1,

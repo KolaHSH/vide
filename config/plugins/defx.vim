@@ -17,26 +17,26 @@
                 \ 'buffer_name': '',
                 \ 'toggle': 1,
                 \ 'resume': 1,
-                \ 'columns': "git:mark:indent:icon:icons:filename:type"
+                \ 'columns': "git:mark:indent:icon:icons:filename"
                 \ })
 
     call defx#custom#column('filename', {
                 \ 'directory_icon': '▸',
                 \ 'opened_icon': '▾',
                 \ 'root_icon': ' ',
-                \ 'min_width': 40,
-                \ 'max_width': 40,
+                \ 'min_width': 5,
+                \ 'max_width': 30,
                 \ })
 
     call defx#custom#column('mark', {
-                \ 'readonly_icon': '✗',
                 \ 'selected_icon': '✓',
+                \ 'readonly_icon': '✗',
                 \ })
 
-    call defx#custom#column('icon', {
-                \ 'readonly_icon': '✗',
-                \ 'selected_icon': '✓',
-                \ })
+    "call defx#custom#column('icon', {
+    "            \ 'readonly_icon': '✗',
+    "            \ 'selected_icon': '✓',
+    "            \ })
 
     autocmd FileType defx call s:defx_my_settings()
     function! s:defx_my_settings() abort
@@ -99,8 +99,11 @@
                     \ defx#do_action('redraw')
         nnoremap <silent><buffer><expr> <C-g>
                     \ defx#do_action('print')
-        nnoremap <silent><buffer><expr> cd
-                    \ defx#do_action('change_vim_cwd')
+        nnoremap <silent><buffer><expr> \
+                    \ defx#do_action('cd', getcwd())
+    "    nnoremap <silent><buffer><expr> cd
+    "                \ defx#do_action('change_vim_cwd')
+    "   nnoremap <silent><buffer><expr> c    defx#do_action('yank_path')
         " nnoremap <silent><buffer><expr> cd
         "             \ defx#do_action('open_directory')
     endf
@@ -137,4 +140,40 @@
     endfunction
 
 " endif
-" defx config end
+
+
+" defx git
+let g:defx_git#indicators = {
+	\ 'Modified'  : 'M',
+	\ 'Staged'    : 'm',
+	\ 'Untracked' : '?',
+	\ 'Renamed'   : '≫',
+	\ 'Unmerged'  : 'u',
+	\ 'Ignored'   : 'i',
+	\ 'Deleted'   : '✖',
+	\ 'Unknown'   : '⁇'
+	\ }
+
+hi Defx_git_Untracked ctermfg=12 guifg=#81a2be
+hi Defx_git_Ignored   ctermfg=8  guifg=#404660
+hi Defx_git_Unknown   ctermfg=3  guifg=#f0c674
+hi Defx_git_Renamed   ctermfg=3  guifg=#de935f
+hi Defx_git_Modified  ctermfg=9  guifg=#cc6666
+hi Defx_git_Unmerged  ctermfg=14 guifg=#8abeb7
+hi Defx_git_Deleted   ctermfg=13 guifg=#b294bb
+hi Defx_git_Staged    ctermfg=10 guifg=#b5bd68
+
+
+" defx icons
+let g:defx_icons_enable_syntax_highlight = 1
+let g:defx_icons_column_length = 2
+let g:defx_icons_directory_icon = ''
+let g:defx_icons_mark_icon = '*'
+let g:defx_icons_parent_icon = ''
+let g:defx_icons_default_icon = ''
+let g:defx_icons_directory_symlink_icon = ''
+" Options below are applicable only when using "tree" feature
+let g:defx_icons_root_opened_tree_icon = ''
+let g:defx_icons_nested_opened_tree_icon = ''
+let g:defx_icons_nested_closed_tree_icon = ''
+"

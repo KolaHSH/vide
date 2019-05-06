@@ -10,31 +10,18 @@ call plug#begin('~/.cache/plugins')
 
 " 代码补全
 " 去youcomplete.vim中设置白名单
-Plug 'Valloric/YouCompleteMe',
-    \ {
-    \ 'do': './install --clang-completer --go-completer --ts-completer --java-completer',
-    \ 'for': ['h', 'c', 'hpp', 'cpp', 'python', 'javascript', 'javascript.jsx', 'ts', 'java', 'go' ]
-    \ }
+" Plug 'Valloric/YouCompleteMe',
+"     \ {
+"     \ 'do': './install --clang-completer --go-completer --ts-completer --java-completer',
+"     \ 'for': ['h', 'c', 'hpp', 'cpp', 'go']
+"     \ }
     " 直接设置白名单
     "
-
-" Plug 'neoclide/coc.nvim',
-"             \ {
-"             \ 'tag': '*',
-"             \ 'do': './install.sh',
-"             \ }
-
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim',
-        \ {
-        \ 'do': ':UpdateRemotePlugins',
-        \ }
-    " \ 'for': ['html', 'css', 'xml', 'sh', 'json', 'vim']
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'neoclide/coc.nvim',
+            \ {
+            \ 'tag': '*',
+            \ 'do': './install.sh',
+            \ }
 
 """""""""""git"""""""""""
 Plug 'tpope/vim-fugitive'
@@ -43,11 +30,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 
 """""""""""web"""""""""""
-Plug 'mattn/emmet-vim', {'for': [ 'html','htm', 'xml', 'xhtml', 'css' ]}
-Plug 'alvan/vim-closetag', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}
-Plug 'gko/vim-coloresque', {'for': ['html', 'htm', 'xml', 'xhtml', 'css', 'vim']}
+" Plug 'mattn/emmet-vim', {'for': [ 'html','htm', 'xml', 'xhtml', 'css' ]}
+" Plug 'alvan/vim-closetag', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}
 Plug 'valloric/MatchTagAlways', {'for': ['html', 'htm', 'xml', 'xhtml', 'css', 'vim']}
 
+"""""""""""viml"""""""""""
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+" vim插件开发远程调试
+Plug 'roxma/vim-hug-neovim-rpc'
+
+"""""""""""md"""""""""""
+Plug 'tpope/vim-markdown'
 
 """""""""""latex"""""""""""
 " latex 插件
@@ -55,11 +49,6 @@ Plug 'lervag/vimtex',
     \ {
     \ }
     " \ 'for': ['tex'],
-
-" repl
-" Plug 'sillybun/vim-repl', {'do':'./install.sh', 'for': ['python', 'bash', 'sh']}
-" 异步执行
-" Plug 'skywind3000/asyncrun.vim', {'for': ['python', 'javascript', 'c', 'cpp', 'sh', 'go', 'ts', 'java']}
 
 """""""""""general"""""""""""""
 " 代码检查 ale
@@ -95,8 +84,6 @@ Plug 'majutsushi/tagbar',
     \ }
     " \ 'on': ['<Plug>Tagbar_Toggle'],
 
-" 生成tags, 好像也需要ctags
-" Plug 'ludovicchabant/vim-gutentags'
 " 代码缩进线
 Plug 'Yggdroot/indentLine',
     \ {
@@ -114,6 +101,12 @@ Plug 'tpope/vim-surround',
     \ {
     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'vim', 'sh', 'tex'],
     \ }
+
+" visual 增强
+Plug 'terryma/vim-expand-region'
+
+" 撤销查看
+Plug 'simnalamburt/vim-mundo'
 
 " 快速检索
 Plug 'Yggdroot/LeaderF',
@@ -137,7 +130,7 @@ else
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'kristijanhusak/defx-git'
-" Plug 'kristijanhusak/defx-icons'
+Plug 'kristijanhusak/defx-icons'
 
 " 开始
 Plug 'mhinz/vim-startify',
@@ -163,16 +156,16 @@ Plug 'junegunn/limelight.vim',
 Plug 'ntpeters/vim-better-whitespace'
 
 " 代码块引擎
-Plug 'SirVer/ultisnips',
-    \ {
-    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
-    \ }
+" Plug 'SirVer/ultisnips',
+"     \ {
+"     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
+"     \ }
 
 " 代码块集合
-Plug 'honza/vim-snippets',
-    \ {
-    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
-    \ }
+" Plug 'honza/vim-snippets',
+"     \ {
+"     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
+"     \ }
 
 " 窗口切换
 Plug 't9md/vim-choosewin',
@@ -196,7 +189,10 @@ Plug 'Shougo/vinarise.vim',
 Plug 'easymotion/vim-easymotion'
 
 " 多光标
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
+
+" 键位查找
+"Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 " 重复
 Plug 'tpope/vim-repeat'
