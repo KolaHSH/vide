@@ -1,34 +1,22 @@
-
 " 使用大写C快速打开用户配置文件
-" function! SetupCommandAbbrs(from, to)
-"   exec 'cnoreabbrev <expr> '.a:from
-"         \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
-"         \ .'? ("'.a:to.'") : ("'.a:from.'"))'
-" endfunction
-
-" " Use C to open coc config
-" call SetupCommandAbbrs('C', 'CocConfig')
-"
-"
-
 " let g:coc_snippet_next = '<M-j>'
 " let g:coc_snippet_prev = '<M-k>'
 let g:coc_status_error_sign = '•'
 let g:coc_status_warning_sign = '•'
 let g:coc_global_extensions =
             \ [
+            \ 'coc-ccls',
+            \ 'coc-python',
+            \ 'coc-tsserver',
+            \ 'coc-java',
             \ 'coc-html',
             \ 'coc-css',
-            \ 'coc-json',
-            \ 'coc-tsserver',
-            \ 'coc-snippets',
-            \ 'coc-emmet',
-            \ 'coc-python',
-            \ 'coc-java',
-            \ 'coc-ccls',
-            \ 'coc-vimtex',
-            \ 'coc-emoji',
             \ 'coc-yaml',
+            \ 'coc-json',
+            \ 'coc-vimtex',
+            \ 'coc-emmet',
+            \ 'coc-snippets',
+            \ 'coc-emoji',
             \ 'coc-highlight',
             \ ]
             " 代码美化, js json css
@@ -37,6 +25,7 @@ let g:coc_global_extensions =
             " \ 'coc-diagnostic',
             " git 还不太会用
             " \ 'coc-git',
+            " \ 'coc-sh',
 
 " 使用tab或者自定义按键来触发补全
 " tab 补全并移动到下一个补全项
@@ -141,6 +130,8 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" show coclist
+nnoremap <silent> <space>l  :<C-u>CocList<CR>
 
 "{{-------------------------ccls
 "https://github.com/MaskRay/ccls/wiki/coc.nvim

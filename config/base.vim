@@ -48,8 +48,9 @@ set switchbuf=useopen,usetab,newtab
 set tw=80
 
 " 来自coc
-set cmdheight=2
+"set cmdheight=2
 set shortmess+=c
+set signcolumn=auto:2
 
 
 

@@ -8,90 +8,102 @@
 
 call plug#begin('~/.cache/plugins')
 
-" 代码补全
-" 去youcomplete.vim中设置白名单
-" Plug 'Valloric/YouCompleteMe',
-"     \ {
-"     \ 'do': './install --clang-completer --go-completer --ts-completer --java-completer',
-"     \ 'for': ['h', 'c', 'hpp', 'cpp', 'go']
-"     \ }
-    " 直接设置白名单
-    "
+"{{-----------------补全
 Plug 'neoclide/coc.nvim',
             \ {
-            \ 'tag': '*',
-            \ 'do': './install.sh',
+            \ 'do': './install.sh nightly',
             \ }
+"}}
 
-"""""""""""git"""""""""""
+"{{-----------------git
 Plug 'tpope/vim-fugitive'
 Plug 'neoclide/vim-easygit'
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
+"}}
 
-"""""""""""web"""""""""""
-" Plug 'mattn/emmet-vim', {'for': [ 'html','htm', 'xml', 'xhtml', 'css' ]}
-" Plug 'alvan/vim-closetag', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}
+"{{-----------------web
+Plug 'alvan/vim-closetag', {'for': ['html', 'htm', 'xml', 'xhtml', 'css']}
 Plug 'valloric/MatchTagAlways', {'for': ['html', 'htm', 'xml', 'xhtml', 'css', 'vim']}
+"}}
 
-"""""""""""viml"""""""""""
+"{{-----------------viml
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 " vim插件开发远程调试
 Plug 'roxma/vim-hug-neovim-rpc'
+"}}
 
-"""""""""""md"""""""""""
+"{{-----------------markdown
 Plug 'tpope/vim-markdown'
+"}}
 
-"""""""""""latex"""""""""""
-" latex 插件
-Plug 'lervag/vimtex',
-    \ {
-    \ }
-    " \ 'for': ['tex'],
+"{{-----------------latex
+Plug 'lervag/vimtex'
+"}}
 
-"""""""""""general"""""""""""""
-" 代码检查 ale
+"{{-----------------代码检查
 Plug 'w0rp/ale',
     \ {
     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'javascript', 'ts', 'java', 'go', 'html', 'css', 'sh', 'vim', 'tex'],
     \ }
+"}}
 
-" 格式化代码
-Plug 'Chiel92/vim-autoformat',
-    \ {
-    \ 'on': 'Autoformat',
-    \ }
-    " \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'vim', 'tex', 'sh'],
+"{{-----------------格式化代码
+Plug 'sbdchd/neoformat'
+" Plug 'Chiel92/vim-autoformat',
+"     \ {
+"     \ 'on': 'Autoformat',
+"     \ }
+"}}
 
-" 代码注释
+"{{-----------------文档类
 Plug 'scrooloose/nerdcommenter'
-
-" 函数描述
 Plug 'vim-scripts/DoxygenToolkit.vim',
             \ {
             \ 'on': ['Dox', 'DoxAuthor', 'DoxBlock', 'DoxLic', 'DoxUndoc' ]
             \ }
+"}}
 
 " 支持多种语言的代码高亮插件
 Plug 'sheerun/vim-polyglot'
 
-""
-" 标签栏
-Plug 'majutsushi/tagbar',
-    \ {
-    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'vim', 'sh', 'tex', 'md'],
-    \ }
-    " \ 'on': ['<Plug>Tagbar_Toggle'],
-
+"{{-----------------美化类
 " 代码缩进线
 Plug 'Yggdroot/indentLine',
     \ {
     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'vim', 'sh', 'tex'],
     \ }
-
 " 彩虹括号
 Plug 'luochen1990/rainbow'
+" 开始
+Plug 'mhinz/vim-startify',
+            \ {
+            \ }
+" 状态栏
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'enricobacis/vim-airline-clock'
+" goyo
+Plug 'junegunn/goyo.vim',
+            \ {
+            \ 'on': 'Goyo',
+            \ }
+Plug 'junegunn/limelight.vim',
+            \ {
+            \ 'on': 'Limelight',
+            \ }
+" 图标
+Plug 'ryanoasis/vim-devicons'
+"}}
+""
+
+"{{----------------------工具
+" 标签栏
+Plug 'majutsushi/tagbar',
+    \ {
+    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'vim', 'sh', 'tex', 'md'],
+    \ }
 
 " 括号补全
 Plug 'jiangmiao/auto-pairs'
@@ -132,49 +144,21 @@ endif
 Plug 'kristijanhusak/defx-git'
 Plug 'kristijanhusak/defx-icons'
 
-" 开始
-Plug 'mhinz/vim-startify',
-            \ {
-            \ }
-
-" 状态栏
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'enricobacis/vim-airline-clock'
-
-" goyo
-Plug 'junegunn/goyo.vim',
-            \ {
-            \ 'on': 'Goyo',
-            \ }
-Plug 'junegunn/limelight.vim',
-            \ {
-            \ 'on': 'Limelight',
-            \ }
 
 " 去除空白
 Plug 'ntpeters/vim-better-whitespace'
 
-" 代码块引擎
-" Plug 'SirVer/ultisnips',
-"     \ {
-"     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
-"     \ }
-
 " 代码块集合
-" Plug 'honza/vim-snippets',
-"     \ {
-"     \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
-"     \ }
+Plug 'honza/vim-snippets',
+    \ {
+    \ 'for': ['asm', 'h', 'hpp', 'c', 'cpp', 'python', 'js', 'ts', 'java', 'go', 'html', 'css', 'sh', 'tex', 'vim']
+    \ }
 
 " 窗口切换
 Plug 't9md/vim-choosewin',
     \ {
     \ 'on': 'ChooseWin',
     \ }
-
-" 图标
-Plug 'ryanoasis/vim-devicons'
 
 " 平滑滚动
 Plug 'terryma/vim-smooth-scroll'
@@ -202,6 +186,7 @@ Plug 'voldikss/vim-translate-me',
     \ {
     \   'on': ['<Plug>Translate', '<Plug>TranslateW']
     \ }
+"}}
 
 " vim中文文档
 Plug 'yianwillis/vimcdoc'

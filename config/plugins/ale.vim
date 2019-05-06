@@ -1,17 +1,6 @@
 " ale config begin
-" if !empty(glob(plug_home."/ale"))
-" ale 也可以格式化代码了, 不太好用感觉
-" let g:ale_fixers = {
-"     \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-"     \   'c': ['astyle', '--style=google'],
-"     \   'cpp': ['astyle', '--style=google'],
-"     \   'python': ['autopep8', '--in-place --aggressive'],
-"     \   'javascript': ['prettier', 'eslint'],
-"     \   'java': ['astyle --style=java'],
-"     \}
-
 " vim支持悬浮?
-let g:ale_set_balloons = 1
+"let g:ale_set_balloons = 1
 
 " 定义别名，vue代表css js ts，均使用eslint
 let g:ale_linter_aliases = {'vue': ['css', 'javascript', 'typescript']}
@@ -27,7 +16,7 @@ let g:ale_linters = {
             \   'cuda': ['nvcc'],
             \   'go': ['gofmt'],
             \   'java': ['javac'],
-            \   'shell': ['shell -n flag'],
+            \   'sh': ['language_server'],
             \   'lua': ['luac'],
             \   'yaml': ['prettier'],
             \   'latex': ['alex'],
@@ -42,28 +31,17 @@ let g:ale_linters_explicit = 1
 " 高亮显示错误地方
 let g:ale_set_highlights = 1
 "自定义error和warning图标
-" let g:ale_sign_error = 'X'
-" let g:ale_sign_warning = '⚡'
+let g:ale_sign_error = '=>'
+let g:ale_sign_warning = '->'
 "状态栏设置,状态栏中整合ale
 let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
 "提示栏设置，显示Linter名称,出错或警告等相关信息
 let g:ale_echo_msg_format = '[%severity% %linter%] -> %s'
-let g:ale_echo_msg_error_str = '✗'
-let g:ale_echo_msg_warning_str = '⚡'
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+let g:ale_echo_msg_error_str = 'ERR'
+let g:ale_echo_msg_warning_str = 'WAR'
+" highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
 
-" 如果安装在中文系统上，java会提示会乱码，设置下面的内容
-" let g:ale_java_javac_options = '-encoding UTF-8  -J-Duser.language=en'
-
-" endif
-" ale config end
-"
-
-" coc 使用微软的python
-" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-"
 "ccls
 let g:ale_cpp_ccls_init_options = {
     \   'cache': {
