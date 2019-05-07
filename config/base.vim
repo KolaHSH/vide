@@ -51,6 +51,3 @@ set tw=80
 "set cmdheight=2
 set shortmess+=c
 set signcolumn=auto:2
-
-
-

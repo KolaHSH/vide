@@ -27,18 +27,6 @@ let g:coc_global_extensions =
             " \ 'coc-git',
             " \ 'coc-sh',
 
-" 使用tab或者自定义按键来触发补全
-" tab 补全并移动到下一个补全项
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
-
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-"
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 " 使用ctrl j ctrl k来跳转补全块
 inoremap <silent><expr> <TAB>
@@ -88,9 +76,6 @@ au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -101,17 +86,20 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Using CocList
 " Show all diagnostics

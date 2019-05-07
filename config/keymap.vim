@@ -21,6 +21,7 @@ noremap <C-down> <C-w><C-j>
 noremap <C-up> <C-w><C-k>
 noremap <C-right> <C-w><C-l>
 " noremap <F10> <esc>:lopen<cr>
+noremap <C-a> <esc>ggVG
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -86,15 +87,6 @@ nnoremap <F7> <esc>:Goyo<cr>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 " choosewin key map
 nnoremap <silent> <M-w> :ChooseWin<CR>
-"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-
-"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-" smooth scroll key map
-" scroll代表半屏，distance duration speed
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 6, 1)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 6, 1)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 8, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"

@@ -29,16 +29,16 @@ let g:ale_sign_column_always = 1
 let g:ale_linters_explicit = 1
 
 " 高亮显示错误地方
-let g:ale_set_highlights = 1
+" let g:ale_set_highlights = 1
 "自定义error和warning图标
-let g:ale_sign_error = '=>'
-let g:ale_sign_warning = '->'
+let g:ale_sign_error = 'ㄨ'
+let g:ale_sign_warning = 'ϟ'
 "状态栏设置,状态栏中整合ale
-let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+let g:ale_statusline_format = ['ㄨ %d', 'ϟ %d', '✔ OK']
 "提示栏设置，显示Linter名称,出错或警告等相关信息
 let g:ale_echo_msg_format = '[%severity% %linter%] -> %s'
-let g:ale_echo_msg_error_str = 'ERR'
-let g:ale_echo_msg_warning_str = 'WAR'
+let g:ale_echo_msg_error_str = 'ㄨ'
+let g:ale_echo_msg_warning_str = 'ϟ'
 " highlight clear ALEErrorSign
 " highlight clear ALEWarningSign
 

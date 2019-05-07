@@ -50,12 +50,8 @@ Plug 'w0rp/ale',
 "}}
 
 "{{-----------------格式化代码
-Plug 'sbdchd/neoformat'
-" Plug 'Chiel92/vim-autoformat',
-"     \ {
-"     \ 'on': 'Autoformat',
-"     \ }
-"}}
+Plug 'Chiel92/vim-autoformat'
+"Plug 'sbdchd/neoformat'
 
 "{{-----------------文档类
 Plug 'scrooloose/nerdcommenter'
@@ -160,8 +156,11 @@ Plug 't9md/vim-choosewin',
     \ 'on': 'ChooseWin',
     \ }
 
+Plug 'thinca/vim-quickrun'
+
 " 平滑滚动
-Plug 'terryma/vim-smooth-scroll'
+"Plug 'terryma/vim-smooth-scroll'
+"Plug 'yuttie/comfortable-motion.vim'
 
 " 二进制查看
 Plug 'Shougo/vinarise.vim',

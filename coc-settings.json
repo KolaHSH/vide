@@ -6,10 +6,13 @@
     "suggest.noselect": true,
     "suggest.detailField": "abbr",
     "suggest.triggerCompletionWait": 50,
+    "suggest.snippetIndicator": "✔",
 
     "diagnostic.displayByAle": true,
     "diagnostic.refreshOnInsertMode": true, // 插入模式也可以使用diagnostic
     "diagnostic.signOffset": 999999,
+	"diagnostic.errorSign": "ㄨ",
+	"diagnostic.warningSign": "ϟ",
 
     "python.autoComplete.addBrackets": true,
     //"python.jediEnabled": true,
