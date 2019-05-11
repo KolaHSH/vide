@@ -51,4 +51,4 @@ set tw=80
 " 来自coc
 "set cmdheight=2
 set shortmess+=c
-set signcolumn=auto:2
+set signcolumn=auto:3

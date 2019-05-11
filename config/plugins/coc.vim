@@ -1,25 +1,24 @@
 let g:coc_global_extensions =
             \ [
-            \ 'coc-ccls',
             \ 'coc-python',
             \ 'coc-tsserver',
             \ 'coc-java',
+            \ 'coc-vimtex',
             \ 'coc-html',
             \ 'coc-css',
             \ 'coc-yaml',
             \ 'coc-json',
-            \ 'coc-vimtex',
             \ 'coc-emmet',
             \ 'coc-snippets',
             \ 'coc-emoji',
             \ 'coc-highlight',
             \ 'coc-git',
             \ ]
-            " 代码美化, js json css
-            " 对话框?
+            " \ 'coc-ccls',
+            " \ 'coc-java',
+            " \ 'coc-sh',
+            """""""
             " \ 'coc-diagnostic',
-            " git 还不太会用
-            " \ 'coc-git',
             " \ 'coc-prettier',
             " \ 'coc-pairs',
 
@@ -39,10 +38,15 @@ endfunction
 " 回车完成代码块
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
                                            \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" 跳转到下一个标记处
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_pre = '<S-TAB>'
+
 " 使用ctrl space触发补全
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" diagnostic
+" diagnostic 跳转
 nmap <silent> <space>[ <Plug>(coc-diagnostic-prev)
 nmap <silent> <space>] <Plug>(coc-diagnostic-next)
 
@@ -61,6 +65,8 @@ function! s:show_documentation()
   endif
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+nnoremap <silent> <space>k :call CocActionAsync('showSignatureHelp')<CR>
 
 " Highlight symbol under cursor on CursorHold
 set updatetime=100
@@ -84,7 +90,8 @@ augroup end
 " Remap for do codeAction of current line
 " nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+" lsp如果实现quickfix功能，那么通过space qf就可以快速进行修复
+nmap <space>qf  <Plug>(coc-fix-current)
 
 " Remap for format selected region
 xmap <space>f  <Plug>(coc-format-selected)

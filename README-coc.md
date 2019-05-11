@@ -1,4 +1,43 @@
-# 使用coc补全
+# vide
+
+> 大而全，什么都装，现在小而精，精简到需要的内容，更专业的东西留给更专业的软件
+>
+> 专业的人做专业的事情，按照自己的水平先做一个可用的vim，然后在一步步学习完善。
+>
+> 后面学习ccls makefile等的内容，没有项目经历理解起来是费点力气的。按照自己当前的水平先配置一个可用的，以后在慢慢完善
+
+作为一个初级vimer，我也是一点点在尝试各种插件，很多内容都是我自己的理解，可能会出错，这里只负责插件的安装和配置
+
+建议配置完基础的插件之后不要折腾一些花里胡哨的东西了，通过配置我发现，我的瓶颈在于对vim基础不熟悉，不会写插件，许多自己想实现的功能插件是无法完全满足你的，这就需要你自己去摸索，在配置过程中我也知道了我对vim不熟悉导致很多高级插件都用不来。
+
+所以我建议是先配置一个基础的能用的投入到生产中，然后在平时进行学习，一点一点的将vim配置成适合自己的样子。
+
+我打算是这样的，以我目前对vim的了解来配置，配置到什么程度就是什么程度，我急需去深入了解一下vim才能继续下去，这个配置我会一点一点进行积累与完善的，尽量将每个插件的配置和用法描述好。如果有错误欢迎指正，我们共同完善。
+
+这个配置我首先会以工程分类为依据进行配置，然后再介绍一些插件的配置和使用，有些花里胡哨的插件配置就不在这里赘述了。
+
+coc-language是对lsp的扩展，可以使用coclist command看到一些快速命令，lsp是语言服务器，根据作者的说法，如果lsp不是nodejs写的那么就不会自带，一般coc-language会自动下载lsp，不过也可以自己配置。
+
+![1557400660691](assets/1557400660691.png)
+
+可以从[这里](https://langserver.org/)找到可用的lsp，目前我
+
+1. bash  bash-language-server
+2. python
+3. c/c++ ccls
+4. viml
+5. html
+6. css
+7. json
+8. java 安装jdtls
+9. js
+10. ts
+
+python3 neovim
+
+python2 neovim
+
+npm neovim
 
 被coc圈粉了
 
@@ -55,6 +94,73 @@ endfunction
 
 ## 项目
 
+对于项目开发，我们需要用到
+
+1. 补全跳转、代码检查、标签列表、文件管理、运行、debug、git管理这几个功能
+
+### c/c++项目
+
+使用coc补全框架，lsp可以选用clangd，也可以选用ccls，这里推荐cclwenjains。
+
+对于`clangd`，貌似只支持`compile_commands.json`文件，对于这个文件，可以手动写，也可以通过`cmake`来自动生成，对于手动写我没有研究过，而使用`cmake`自动生成则需要会写`CMakeList.txt`，这里有一篇`CMakeList.txt`的[简单的教程](#)。也可以使用`makefile`文件来生成`compile_commands.json`，这个需要用到[bear](https://github.com/rizsotto/Bear)这个软件。当然，生成`compile_commands.json`文件还有其他很多方式，可以参考[这里](https://github.com/MaskRay/ccls/wiki/Project-Setup)。
+
+> compile_commands.json
+>
+> Compilation database as project format. With non-CMake and non-Gradle projects, you can still benefit from the advanced IDE features that CLion provides. ... A compilation database is a **JSON**-formatted file named **compile_commands**.**json** that contains structured data about every compilation unit in your project.
+
+以我的理解`compile_commands.json`貌似只对现有的工程有效，也就是对学习已有代码很有帮助，而对于新建的工程则需要每次添加一个文件的时候更新一次`compile_commands.json`文件，我不清楚我理解的对不对。
+
+下面推荐ccls作为lsp的原因也是基于上述考虑，ccls既可以使用`compile_commands.json`文件也可以使用自定义的`.ccls`文件。`.ccls`文件易于编写，在项目根目录加入这个文件之后就可以进行补全，跳转之类的功能了。下面是`.ccls`文件的简单使用。
+
+#### `.ccls`文件的简单使用
+
+`.ccls`是一个行文本，位于项目根目录，用来指定编译参数。每一行都会作为编译参数增加到编译命令中，参数中不能有空格，比如`-Ifoo`，`-I\nfoo`是可以的，而`-I foo`是不可以。简单说了就是在编译项目的时候用到了哪些参数，那么这些参数一个一行添加到`.ccls`文件中就可以使用了。
+
+```
+clang
+-Ifoo
+-I./include
+-I
+../include
+
+-I foo         这是错误的，上面的都是对的，除了第一行，其余的每一行都会增加到编译命令中
+```
+
+当然每一行也可以使用%开头的指令，来指定该行的参数。
+
+`%compile_commands.json`
+
+默认`.ccls`文件中的编译选项只会应用到没有在`compile_commands.json`文件中列出的文件中。
+
+如果`%compile_commands.json`出现在`.ccls`文件开头，然后`%compile_commands.json`也被解析过了，那么`.ccls`中的编译指令将会追加到在`%compile_commands.json`中列出的文件后面。
+
+##### `%c` / `%cpp` / `%objective-c` / `%objective-cpp`
+
+这些参数只能被用来解析c（%c），c++（%cpp），object-c（%objective-c），object-c++（%objective-c++）文件。
+
+##### `%h` / `%hpp`
+
+这些参数用来索引c头文件（%h：*.h）或者c++头文件（%hpp：*.hh *.hpp），需要注意的是`\*.h`文件被认为是c的头文件而不是c++的头文件。增加下面的命令让`\*.h`文件作为c++头文件来解析。
+
+```
+%h -x
+%h c++-header
+```
+
+如果工程中既有c也有c++文件，那么a.h的编译选项可能来自c文件而不是c++，可能会出现如下错误，`unknown type name 'class'
+
+##### 编译驱动程序
+
+第一行如果不是`%compile_commands.json`，那么通常就是clang，不推荐clang++，如果有c文件，那么容易出错。
+
+#### 实例
+
+写完.ccls文件之后就可以愉快的写c/c++项目了，下面是一个简单例子。
+
+[![asciicast](assets/245566.svg)](https://asciinema.org/a/245566)
+
+<script id="asciicast-245582" src="https://asciinema.org/a/245582.js" async></script>
+
 ### java
 
 https://github.com/neoclide/coc-java
@@ -86,9 +192,11 @@ https://github.com/neoclide/coc-java
 | space rn   |      | 重命名变量，可以将本buffer的所有变量进行重命名 |
 | gd         |      | 跳转到定义                                     |
 | gy         |      | 跳转到类型定义                                 |
-| gi         |      | 跳转到实现implement                            |
-| gr         |      | go to reference                                |
-|            |      |                                                |
+| gi         |      | 跳转到实现                                     |
+| gr         |      | 跳转到引用                                     |
+| shift k    |      | 悬浮窗口查看定义                               |
+| space k    |      | 悬浮窗口查看函数参数                           |
+| space qf   |      | quick fix 快速修复                             |
 
 
 ### 多光标

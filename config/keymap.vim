@@ -1,6 +1,6 @@
 "------------------------------------------- base key map
 inoremap jk <esc>
-nnoremap ;; <esc>:
+"nnoremap ;; <esc>:
 nnoremap q <esc>:close<cr>
 vnoremap q <esc>:close<cr>
 nnoremap <BackSpace> :nohl<cr>
@@ -9,13 +9,45 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
-noremap <C-s> <C-w>s
-noremap <C-v> <C-w>v
-"noremap <C-a> <esc>ggVG
+nmap <C-w>[ :vertical resize -3<CR>
+nmap <C-w>] :vertical resize +3<CR>
+"
+nnoremap <c-w>s <esc><c-w>s<esc><c-w>j
+nnoremap <c-w>v <esc><c-w>v<esc><c-w>l
+
+imap <C-s> <esc>:w<cr>
+imap <C-Q> <esc>:wq<cr>
+imap <C-o> <esc>o
+
+nnoremap  ]b :bp<CR>
+nnoremap  [b :bn<CR>
+"delete buffer
+nnoremap <C-x>  :bd<CR>
+
+"smart move
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+
+"tabline operation
+nmap <leader>tn :tabnew<cr>
+nmap <leader>te :tabedit
+nmap <leader>tc :tabclose<cr>
+nmap <leader>tm :tabmove
+
+"yank to end
+nnoremap Y y$
+
+
+" terminal
+tnoremap <Esc> <C-\><C-n>
+
+cnoremap w!! w !sudo tee % >/dev/null
 
 "------------------------------------------- ale
-nmap <silent> [[ <Plug>(ale_previous_wrap)
-nmap <silent> ]] <Plug>(ale_next_wrap)
+nmap <silent> <c-[> <Plug>(ale_previous_wrap)
+nmap <silent> <c-]> <Plug>(ale_next_wrap)
 " nn <silent> <M-d> :ALEGoToDefinition<cr>
 " nn <silent> <M-r> :ALEFindReferences<cr>
 " nn <silent> <M-a> :ALESymbolSearch<cr>
@@ -23,14 +55,14 @@ nmap <silent> ]] <Plug>(ale_next_wrap)
 
 "------------------------------------------- airline buffer
 " airline key map
-nmap <M-h> <Plug>AirlineSelectPrevTab
-nmap <M-l> <Plug>AirlineSelectNextTab
+" nmap <M-h> <Plug>AirlineSelectPrevTab
+" nmap <M-l> <Plug>AirlineSelectNextTab
 
 "------------------------------------------- leaderf
 nnoremap <M-f> :LeaderfFile<CR>
 nnoremap <M-t> :LeaderfBufTag<CR>
 nnoremap <M-T> :LeaderfBufTagAll<CR>
-nnoremap <M-b> :LeaderfBufferAll<CR>
+nnoremap <M-o> :LeaderfBufferAll<CR>
 nnoremap <M-s> :LeaderfLine<CR>
 nnoremap <M-S> :LeaderfLineAll<CR>
 nnoremap <M-r> :LeaderfMru<CR>
@@ -47,7 +79,7 @@ nnoremap <F7> <esc>:Goyo<cr>
 nnoremap <silent> <M-w> :ChooseWin<CR>
 
 "------------------------------------------- Autoformat
-nnoremap <c-i> :Autoformat<cr>
+nnoremap <M-i> :Autoformat<cr>
 
 "------------------------------------------- defx
 function Open_cur_file_dir()
