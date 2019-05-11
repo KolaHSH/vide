@@ -41,6 +41,8 @@
 
 不知这样子会不会更好，依照我目前的水平，我还搞不定。
 
+<script id="asciicast-245582" src="https://asciinema.org/a/245582.js" async></script>
+
 ## 主界面截图
 
 ![1556892820481](assets/1556892820481.png)
